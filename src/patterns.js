@@ -1,0 +1,10 @@
+export const whitePiecePattern = /[PNBRKQ]/g
+export const blackPiecePattern = /[pnbrkq]/g
+export const rankPattern = /[a-h]/gi
+export const sidePattern = /w|b/gi
+export const alphaPattern = /[pnrkqabdcdefghw]/gi
+export const slashPattern = /\//g
+export const whiteSpacePattern = /\s/g
+export const dashPattern = /-/g
+export const digitPattern = /\d/g
+export const enPassantFilePattern = /3|6/g

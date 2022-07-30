@@ -1,0 +1,20 @@
+{
+  "name": "fenjs",
+  "version": "0.0.1",
+  "description": "JavaScript library for parsing Forsyth-Edwards Notiation (FEN)",
+  "main": "fentest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frederickf/fenjs.git"
+  },
+  "author": "Frederick C. Feibel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frederickf/fenjs/issues"
+  },
+  "homepage": "https://github.com/frederickf/fenjs#readme",
+  "type": "module"
+}
