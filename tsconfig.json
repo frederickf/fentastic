@@ -1,0 +1,19 @@
+{
+  /* Visit https://aka.ms/tsconfig to read more about this file */
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "compilerOptions": {
+    "target": "es2016",
+    "lib": ["es2016"],
+    "module": "node16",
+    "outDir": "dist",
+    "esModuleInterop": true, 
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "types": ["node"]
+  }
+}

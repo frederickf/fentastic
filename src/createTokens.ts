@@ -3,10 +3,16 @@ import {
 } from './patterns.js'
 import { alpha, slash, ws, dash, digit } from './tokenTypes.js'
 
+type Token = {
+  value: string | number,
+  type: string,
+  position: number
+}
+
 export const createTokens = (fenStr = '') => {
   const tokens = []
   for (let char of fenStr) {
-    const token = {
+    const token: Partial<Token> = {
       value: char
     }
     // We start with alpha because b is duplicated (bishop, black side, b file)

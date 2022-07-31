@@ -18,6 +18,7 @@ const parsers = [
 
 export const parseFen = (fenString = '') => {
   let tokens = createTokens(fenString.trim())
+  console.log(tokens)
   let fields = createFields(tokens)
   const fenObject = {
     fenString

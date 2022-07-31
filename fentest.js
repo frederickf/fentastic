@@ -1,4 +1,4 @@
-import { parseFen } from './src/fen.js'
+import { parseFen } from './dist/fen.js'
 
 console.log('input', process.argv[2])
 

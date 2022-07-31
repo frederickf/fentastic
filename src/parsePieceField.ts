@@ -137,10 +137,16 @@ const parseRanks = ranks => {
   return pieceTokens
 }
 
+type Piece = {
+  position: string,
+  color: 'white'|'black',
+  type: string
+}
+
 const createPieces = pieceTokens => {
   let pieces = []
   for (let token of pieceTokens) {
-    let piece = {
+    let piece: Partial<Piece> = {
       position: `${token.rank}${token.file}`
     }
     if (token.value.match(whitePiecePattern)) {
