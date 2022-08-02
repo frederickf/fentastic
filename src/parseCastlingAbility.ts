@@ -1,15 +1,19 @@
 import { isDash } from './tokenTypes.js'
+import { Token } from './createTokens.js'
 
-export const validate = field => {
-  
+export type CastlingAbility = {
+  whiteKing: boolean;
+  whiteQueen: boolean;
+  blackKing: boolean;
+  blackQueen: boolean;
 }
 
-export const parseCastlingAbility = field => {
+export const parseCastlingAbility = (field: Token[]): CastlingAbility | undefined => {
   if (field.length === 1 && isDash(field[0].type)) {
     return undefined
   }
 
-  const castlingAbility = { 
+  const castlingAbility: CastlingAbility = { 
     whiteKing: false,
     whiteQueen: false, 
     blackKing: false,

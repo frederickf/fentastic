@@ -3,16 +3,18 @@ import {
 } from './patterns.js'
 import { alpha, slash, ws, dash, digit } from './tokenTypes.js'
 
-type Token = {
-  value: string | number,
-  type: string,
-  position: number
+export type Token = {
+  value: string | number;
+  type: string;
+  position: number;
+  rank: number;
+  file: string;
 }
 
-export const createTokens = (fenStr = '') => {
-  const tokens = []
+export const createTokens = (fenStr = ''): Token[] => {
+  const tokens: Token[] = []
   for (let char of fenStr) {
-    const token: Partial<Token> = {
+    let token = <Token>{
       value: char
     }
     // We start with alpha because b is duplicated (bishop, black side, b file)
@@ -30,7 +32,7 @@ export const createTokens = (fenStr = '') => {
     }
     else if (char.match(digitPattern)) {
       token.type = digit
-      token.value = Number(char)
+      token.value = Number(char) // TODO: does this really need to be a number?
     }
     else {
       throw new Error(`Invalid character "${char}" at position ${tokens.length}`)

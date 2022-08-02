@@ -1,15 +1,7 @@
 import { isWhiteSpace } from './tokenTypes.js'
+import { Token } from './createTokens.js'
 
-export const fieldNames = [
-  'piecePlacement',
-  'sideToMove',
-  'castlingAbility',
-  'enPassantTargetSquare',
-  'halfMoveClock',
-  'fullMoveClock'
-]
-
-export const createFields = tokens => {
+export const createFields = (tokens: Token[]) => {
   const fields = []
   let currentField = []
   for (let currentToken of tokens) {

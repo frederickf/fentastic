@@ -1,4 +1,5 @@
 import { isWhiteSpace } from './tokenTypes.js'
+import { Token } from './createTokens.js'
 
 /**
  * Collapse whitespace down to one. The spec calls for the fields to be separated
@@ -6,7 +7,7 @@ import { isWhiteSpace } from './tokenTypes.js'
  * @param {array} tokens 
  * @returns {array}
  */
- export const collapseWhiteSpace = tokens => {
+ export const collapseWhiteSpace = (tokens: [Token]) => {
   let wsCount = 0
   const newTokens = []
   for (let token of tokens) {
