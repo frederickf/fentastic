@@ -2,7 +2,7 @@ import { Token } from './createTokens.js'
 
 export const validate = (field: Token[]) => {
   if (field.length !== 1) {
-    throw new Error(`sideToMove contains too many characters. Found ${field.length}; expected 1`)
+    throw new Error(`Active color field contains too many characters. Expected 1; Found ${field.length} at ${field[0].position}`)
   }
 
   if (field[0].value !== 'w' && field[0].value !== 'b') {
