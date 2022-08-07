@@ -7,3 +7,4 @@ export const whiteSpacePattern = /\s/g
 export const dashPattern = /-/g
 export const digitPattern = /\d/g
 export const enPassantFilePattern = /3|6/g
+export const halfMovePattern = /[0-9]/g

@@ -13,6 +13,10 @@ export const parseCastlingAbility = (field: Token[]): CastlingAbility | undefine
     return undefined
   }
 
+  if (field.length > 4) {
+    throw new Error(`Castling ability field too long. Expected 4, instead found "${field[0].value}" at ${field[0].position}`)
+  }
+
   const castlingAbility: CastlingAbility = { 
     whiteKing: false,
     whiteQueen: false, 

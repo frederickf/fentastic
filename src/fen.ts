@@ -1,11 +1,11 @@
 import { createTokens } from './createTokens.js'
+import { collapseWhiteSpace } from './collapseWhiteSpace.js'
 import { createFields } from './createFields.js'
 import { parsePieceField } from './parsePieceField.js'
 import { parseSideToMove } from './parseSideToMove.js'
 import { parseCastlingAbility, CastlingAbility } from './parseCastlingAbility.js'
 import { parseEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
-import { parseHalfMoveClock } from './parseHalfMoveClock.js'
-import { parseFullMoveClock } from './parseFullMoveClock.js'
+import { parseHalfMoveClock, parseFullMoveClock } from './parseClocks.js'
 
 type FenObject = {
   fenString: string;
@@ -17,9 +17,12 @@ type FenObject = {
   fullMoveClock: number;
 }
 
-export const parseFen = (fenString = '') => {
+export const parseFen = (fenString = '', strict = false) => {
   let tokens = createTokens(fenString.trim())
-  let fields = createFields(tokens)
+  if (!strict) {
+    tokens = collapseWhiteSpace(tokens)
+  }
+  const fields = createFields(tokens)
   const fenObject: FenObject = {
     fenString,
     piecePlacement: parsePieceField(fields[0]),

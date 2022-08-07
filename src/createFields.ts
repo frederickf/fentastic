@@ -2,15 +2,15 @@ import { isWhiteSpace } from './tokenTypes.js'
 import { Token } from './createTokens.js'
 
 export const createFields = (tokens: Token[]) => {
-  const fields = []
-  let currentField = []
+  const fields: Token[][] = []
+  let currentField: Token[] = []
   for (let currentToken of tokens) {
-    if (isWhiteSpace(currentToken.type) ) {
-      fields.push(currentField)
-      currentField = []
+    if (!isWhiteSpace(currentToken.type)) {
+      currentField.push(currentToken)
     }
     else {
-      currentField.push(currentToken)
+      fields.push(currentField)
+      currentField = []
     }
   }
   fields.push(currentField)

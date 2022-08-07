@@ -1,6 +1,11 @@
-import { isDigit, isSlash, isAlpha, isTokenDigit } from './tokenTypes.js'
+import { isDigit, isSlash, isAlpha } from './tokenTypes.js'
 import { whitePiecePattern, blackPiecePattern } from './patterns.js'
 import { Token } from './createTokens.js'
+
+type PieceToken = Token & {
+  rank: number;
+  file: string;
+}
 
 type Piece = {
   position: string,
@@ -41,8 +46,6 @@ const nextValidMap: NextValid = {
 
 const fileLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
-const isLast = (tokenCount: number, tokenPosition: number): boolean => tokenCount === (tokenPosition)
-
 const isWhite = (value: string) => value.match(whitePiecePattern)
 
 const isBlack = (value: string) => value.match(blackPiecePattern)
@@ -56,13 +59,14 @@ const validate = (tokens: Token[]) => {
     let nextToken = n < tokens.length ? tokens[n] : undefined
 
     // Validate the current token type and update counts
-    if (isDigit(currentToken.type) && typeof currentToken.value === 'number') {
-      if (currentToken.value < 1 || currentToken.value > 8) {
+    if (isDigit(currentToken.type)) {
+      let currentTokenValue = Number(currentToken.value)
+      if (currentTokenValue < 1 || currentTokenValue > 8) {
         throw new Error (`Invalid character at ${currentToken.position}. Numbers must be between 1 to 8, found "${currentToken.value}"`)
       }
-      fileCount = fileCount + currentToken.value
+      fileCount = fileCount + currentTokenValue
     }
-    else if (isAlpha(currentToken.type) && typeof currentToken.value === 'string') {
+    else if (isAlpha(currentToken.type)) {
       if (!isWhite(currentToken.value) && !isBlack(currentToken.value)) {
         throw new Error(`Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${currentToken.value}" at ${currentToken.position}`)
       }
@@ -95,98 +99,41 @@ const validate = (tokens: Token[]) => {
   return tokens
 }
 
-const createRanks = (pieceTokens: Token[]): Token[][] => {
+const createPieceTokens = (tokens: Token[]): PieceToken[] => {
   let currentRank = 8
-  const ranks: Token[][] = []
-  let rank: Token[] = []
-  for (let token of pieceTokens) {
+  let fileIndex = 0;
+  const pieceTokens: PieceToken[] = []
+  for (let token of tokens) {
     if (!isSlash(token.type)) {
-      // This will result in digit tokens getting a rank letter, but that's ok
-      token.rank = currentRank
-      rank.push(token)
-    }
-
-    if (isSlash(token.type) || isLast(pieceTokens.length, token.position)) {
-      ranks.push(rank)
+      fileIndex = isDigit(token.type) ? fileIndex + Number(token.value) : fileIndex + 1
+      if (!isDigit(token.type)) {
+        pieceTokens.push({...token, rank: currentRank, file: fileLetters[fileIndex - 1]})
+      }
     }
 
     if (isSlash(token.type)) {
       currentRank = currentRank - 1
-      rank = []
+      fileIndex = 0
     }
-  }
-
-  // if (ranks.length !== 8) {
-  //   throw new Error(`Rank count ${ranks.length} should be 8 in pieces field`)
-  // }
-
-  return ranks
-}
-
-
-// Adds file to piece token and return array of only piece tokens, no digits
-const addFileToPieceToken = (rank: Token[]): Token[] => { 
-  let fileIndex = 0;
-  const pieceTokens: Token[] = []
-  let token: Token
-  for (token of rank) {
-    if (isDigit(token.type)) {
-      fileIndex = fileIndex + <number>token.value
-    }
-    else {
-      fileIndex = fileIndex + 1
-    }
-
-    // if (fileIndex > 8) {
-    //   throw new Error(`File value ${fileIndex} must not exceed 8 at ${token.position}`)
-    // }
-
-    if (!isDigit(token.type)) {
-      token.file = fileLetters[fileIndex - 1]
-      pieceTokens.push(token)
-    }
-  }
-  // if (fileIndex < 8) {
-  //   throw new Error(`File value ${fileIndex} must equal 8 at ${token.position}`)
-  // }
-  return pieceTokens
-}
-
-const parseRanks = (ranks: Token[][]): Token[] => {
-  let pieceTokens: Token[] = []
-  for (let rank of ranks) {
-    pieceTokens = pieceTokens.concat(addFileToPieceToken(rank))
   }
   return pieceTokens
 }
 
-const createPieces = (pieceTokens: Token[]) => {
-  let pieces = []
-  for (let token of pieceTokens) {
-    let piece: Partial<Piece> = {
-      position: `${token.rank}${token.file}`
-    }
-    
-    let tokenValue: string = <string> token.value;
-    if (tokenValue.match(whitePiecePattern)) {
-      piece.color = 'white'
-    }
-    else {
-      // We already validated color, so we know if not white, then black
-      piece.color = 'black'
-    }
-    // else {
-    //   throw new Error(`Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found ${token.value} at ${token.position}`)
-    // }
-    piece.type = pieceTypes[tokenValue.toLowerCase() as keyof PieceTypes]
-    pieces.push(piece)
+const createPieces = (tokens: PieceToken[]): Piece[] => {
+  let pieces: Piece[] = []
+  for (let token of tokens) {
+    // We already validated color, so we know if not white, then black
+    pieces.push({
+      position: `${token.rank}${token.file}`,
+      color: token.value.match(whitePiecePattern) ? 'white' : 'black',
+      type: pieceTypes[token.value.toLowerCase() as keyof PieceTypes]
+    })
   }
   return pieces
 }
 
-export const parsePieceField = (pieceFieldTokens: Token[]) => {
-  const validTokens = validate(pieceFieldTokens)
-  const ranks = createRanks(validTokens)
-  const pieceTokens = parseRanks(ranks)
+export const parsePieceField = (field: Token[]) => {
+  const validTokens = validate(field)
+  const pieceTokens = createPieceTokens(validTokens)
   return createPieces(pieceTokens)
 }

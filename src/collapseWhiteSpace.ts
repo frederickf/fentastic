@@ -4,20 +4,12 @@ import { Token } from './createTokens.js'
 /**
  * Collapse whitespace down to one. The spec calls for the fields to be separated
  * by one whitespace character, so this is unnecessary, but generous
- * @param {array} tokens 
- * @returns {array}
  */
- export const collapseWhiteSpace = (tokens: [Token]) => {
+ export const collapseWhiteSpace = (tokens: Token[]): Token[] => {
   let wsCount = 0
   const newTokens = []
   for (let token of tokens) {
-    if (isWhiteSpace(token.type)) {
-      wsCount = wsCount + 1
-    }
-    else {
-      wsCount = 0
-    }
-
+    wsCount = isWhiteSpace(token.type) ? wsCount + 1 : 0
     if (wsCount <= 1 ) {
       newTokens.push(token)
     }
