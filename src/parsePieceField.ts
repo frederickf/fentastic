@@ -75,6 +75,9 @@ const validate = (tokens: Token[]) => {
     else if (isSlash(currentToken.type)) {
       // We know this must be slash because we validated the current token type already
       rankCount = rankCount + 1
+      if (fileCount !== 8 ) {
+        throw new Error(`Invalid file value. Expected 8, but found ${fileCount} at ${currentToken.position}`)
+      }
       fileCount = 0
     }
     else {
@@ -84,7 +87,7 @@ const validate = (tokens: Token[]) => {
     // Confirm next character is valid for the current one
     let nextValid = nextValidMap[currentToken.type as keyof NextValid]
     if (nextToken && !nextValid.includes(nextToken.type)) {
-      throw new Error (`Invalid character at ${currentToken.position}. Expected ${nextValid.join('|')} instead found "${currentToken.value}" at ${currentToken.position}`)
+      throw new Error (`Invalid character at ${nextToken.position}. Expected ${nextValid.join('|')} instead found "${nextToken.value}"`)
     }
 
     if (fileCount > 8) {
