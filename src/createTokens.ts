@@ -7,8 +7,6 @@ export type Token = {
   value: string;
   type: string;
   position: number;
-  // rank: number;
-  // file: string;
 }
 
 export const createTokens = (fenstr = ''): Token[] => {
