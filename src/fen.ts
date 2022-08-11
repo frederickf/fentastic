@@ -1,15 +1,15 @@
 import { createTokens } from './createTokens.js'
 import { collapseWhiteSpace } from './collapseWhiteSpace.js'
 import { createFields } from './createFields.js'
-import { parsePieceField } from './parsePieceField.js'
+import { parsePieceField, type Piece } from './parsePieceField.js'
 import { parseSideToMove } from './parseSideToMove.js'
-import { parseCastlingAbility, CastlingAbility } from './parseCastlingAbility.js'
+import { parseCastlingAbility, type CastlingAbility } from './parseCastlingAbility.js'
 import { parseEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
 import { parseHalfMoveClock, parseFullMoveClock } from './parseClocks.js'
 
 type FenObject = {
   fenString: string;
-  piecePlacement: object[]; // TODO: describe the object contents
+  piecePlacement: Piece[];
   sideToMove: string;
   castlingAbility: CastlingAbility | undefined;
   enPassantTargetSquare: string | undefined;

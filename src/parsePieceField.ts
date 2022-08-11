@@ -6,7 +6,7 @@ type PieceToken = Token & {
   file: string;
 }
 
-type Piece = {
+export type Piece = {
   position: string,
   color: 'white'|'black',
   type: string
