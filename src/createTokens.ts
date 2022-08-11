@@ -2,7 +2,7 @@ import {
   alphaPattern, slashPattern, whiteSpacePattern, dashPattern, digitPattern
 } from './patterns.js'
 import {
-  Token, createAlphaToken, createSlashToken, createWsToken, createDashToken, createDigitToken
+  type Token, createAlphaToken, createSlashToken, createWsToken, createDashToken, createDigitToken
 } from './token.js'
 
 export const createTokens = (fenstr = ''): Token[] => {

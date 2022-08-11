@@ -1,4 +1,4 @@
-import { Token, isDash } from './token.js'
+import { type Token, isDash } from './token.js'
 
 export type CastlingAbility = {
   whiteKing: boolean;

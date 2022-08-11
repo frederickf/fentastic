@@ -1,4 +1,4 @@
-import { Token, isWhiteSpace } from './token.js'
+import { type Token, isWhiteSpace } from './token.js'
 
 export const createFields = (tokens: Token[]) => {
   const fields: Token[][] = []

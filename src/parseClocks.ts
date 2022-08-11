@@ -1,4 +1,4 @@
-import { Token, isDigit} from './token.js'
+import { type Token, isDigit} from './token.js'
 
 const validate = (tokens: Token[]): Token[] => {
   for (let token of tokens) {

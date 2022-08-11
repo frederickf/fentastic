@@ -1,5 +1,5 @@
 import { whitePiecePattern, blackPiecePattern } from './patterns.js'
-import { Token, isDigit, isSlash, isAlpha } from './token.js'
+import { type Token, isDigit, isSlash, isAlpha } from './token.js'
 
 type PieceToken = Token & {
   rank: number;

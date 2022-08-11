@@ -1,5 +1,5 @@
 import { rankPattern, enPassantFilePattern } from './patterns.js'
-import { Token, isDash } from './token.js'
+import { type Token, isDash } from './token.js'
 
 export const parseEnPassantTargetSquare = (field: Token[] ): string | undefined => {
   if (field.length === 1) {
