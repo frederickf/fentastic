@@ -1,13 +1,9 @@
 import { 
   alphaPattern, slashPattern, whiteSpacePattern, dashPattern, digitPattern
 } from './patterns.js'
-import { alpha, slash, ws, dash, digit } from './tokenTypes.js'
-
-export type Token = {
-  value: string;
-  type: string;
-  position: number;
-}
+import {
+  Token, createAlphaToken, createSlashToken, createWsToken, createDashToken, createDigitToken
+} from './token.js'
 
 export const createTokens = (fenstr = ''): Token[] => {
   const tokens: Token[] = []
@@ -15,19 +11,19 @@ export const createTokens = (fenstr = ''): Token[] => {
     let char: string = fenstr.charAt(i)
     // We start with alpha because b is duplicated (bishop, black side, b file)
     if (char.match(alphaPattern)) {
-      tokens.push({type: 'alpha', value: char, position: i})
+      tokens.push(createAlphaToken(char, i))
     } 
     else if (char.match(slashPattern)) {
-      tokens.push({type: 'slash', value: char, position: i})
+      tokens.push(createSlashToken(char, i))
     } 
     else if (char.match(whiteSpacePattern)) {
-      tokens.push({type: 'whitespace', value: char, position: i})
+      tokens.push(createWsToken(char, i))
     }
     else if (char.match(dashPattern)) {
-      tokens.push({type: 'dash', value: char, position: i})
+      tokens.push(createDashToken(char, i))
     }
     else if (char.match(digitPattern)) {
-      tokens.push({type: 'digit', value: char, position: i})
+      tokens.push(createDigitToken(char, i))
     }
     else {
       throw new Error(`Invalid character "${char}" at position ${i}`)

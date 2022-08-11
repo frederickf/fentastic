@@ -1,6 +1,5 @@
-import { isDigit, isSlash, isAlpha } from './tokenTypes.js'
 import { whitePiecePattern, blackPiecePattern } from './patterns.js'
-import { Token } from './createTokens.js'
+import { Token, isDigit, isSlash, isAlpha } from './token.js'
 
 type PieceToken = Token & {
   rank: number;
@@ -59,20 +58,20 @@ const validate = (tokens: Token[]) => {
     let nextToken = n < tokens.length ? tokens[n] : undefined
 
     // Validate the current token type and update counts
-    if (isDigit(currentToken.type)) {
+    if (isDigit(currentToken)) {
       let currentTokenValue = Number(currentToken.value)
       if (currentTokenValue < 1 || currentTokenValue > 8) {
         throw new Error (`Invalid character at ${currentToken.position}. Numbers must be between 1 to 8, found "${currentToken.value}"`)
       }
       fileCount = fileCount + currentTokenValue
     }
-    else if (isAlpha(currentToken.type)) {
+    else if (isAlpha(currentToken)) {
       if (!isWhite(currentToken.value) && !isBlack(currentToken.value)) {
         throw new Error(`Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${currentToken.value}" at ${currentToken.position}`)
       }
       fileCount = fileCount + 1
     }
-    else if (isSlash(currentToken.type)) {
+    else if (isSlash(currentToken)) {
       // We know this must be slash because we validated the current token type already
       rankCount = rankCount + 1
       if (fileCount !== 8 ) {
@@ -107,14 +106,14 @@ const createPieceTokens = (tokens: Token[]): PieceToken[] => {
   let fileIndex = 0;
   const pieceTokens: PieceToken[] = []
   for (let token of tokens) {
-    if (!isSlash(token.type)) {
-      fileIndex = isDigit(token.type) ? fileIndex + Number(token.value) : fileIndex + 1
-      if (!isDigit(token.type)) {
+    if (!isSlash(token)) {
+      fileIndex = isDigit(token) ? fileIndex + Number(token.value) : fileIndex + 1
+      if (!isDigit(token)) {
         pieceTokens.push({...token, rank: currentRank, file: fileLetters[fileIndex - 1]})
       }
     }
 
-    if (isSlash(token.type)) {
+    if (isSlash(token)) {
       currentRank = currentRank - 1
       fileIndex = 0
     }

@@ -5,7 +5,9 @@
   "main": "fentest.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "tsc"
+    "precompile": "npm run clean",
+    "compile": "tsc",
+    "clean": "rimraf dist/"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "^18.6.3",
+    "rimraf": "^3.0.2",
     "typescript": "^4.7.4"
   }
 }

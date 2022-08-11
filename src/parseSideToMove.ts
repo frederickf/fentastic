@@ -1,4 +1,4 @@
-import { Token } from './createTokens.js'
+import { Token } from './token.js'
 
 export const parseSideToMove = (field: Token[]): 'white' | 'black' => {
   if (field.length !== 1) {

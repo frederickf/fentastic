@@ -1,5 +1,4 @@
-import { isWhiteSpace } from './tokenTypes.js'
-import { Token } from './createTokens.js'
+import { Token, isWhiteSpace } from './token.js'
 
 /**
  * Collapse whitespace down to one. The spec calls for the fields to be separated
@@ -9,7 +8,7 @@ import { Token } from './createTokens.js'
   let wsCount = 0
   const newTokens = []
   for (let token of tokens) {
-    wsCount = isWhiteSpace(token.type) ? wsCount + 1 : 0
+    wsCount = isWhiteSpace(token) ? wsCount + 1 : 0
     if (wsCount <= 1 ) {
       newTokens.push(token)
     }

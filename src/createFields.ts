@@ -1,11 +1,10 @@
-import { isWhiteSpace } from './tokenTypes.js'
-import { Token } from './createTokens.js'
+import { Token, isWhiteSpace } from './token.js'
 
 export const createFields = (tokens: Token[]) => {
   const fields: Token[][] = []
   let currentField: Token[] = []
   for (let currentToken of tokens) {
-    if (!isWhiteSpace(currentToken.type)) {
+    if (!isWhiteSpace(currentToken)) {
       currentField.push(currentToken)
     }
     else {

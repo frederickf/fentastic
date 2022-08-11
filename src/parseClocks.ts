@@ -1,9 +1,8 @@
-import { isDigit } from './tokenTypes.js'
-import { Token } from './createTokens.js'
+import { Token, isDigit} from './token.js'
 
 const validate = (tokens: Token[]): Token[] => {
   for (let token of tokens) {
-    if (!isDigit(token.type)) {
+    if (!isDigit(token)) {
       throw new Error(`Expected "0-9", instead found "${token.value}" at ${token.position}`)
     }
   }
@@ -13,7 +12,7 @@ const validate = (tokens: Token[]): Token[] => {
 const concatClockValues = (tokens: Token[]): number => {
   let value = ''
   for (let token of tokens) {
-    if (isDigit(token.type)) {
+    if (isDigit(token)) {
       value = `${value}${token.value}`
     }
     else {
@@ -33,7 +32,7 @@ export const parseHalfMoveClock = (field: Token[]): number => {
 }
 
 export const parseFullMoveClock = (field: Token[]): number => {
-  if (field[0].value === '0' || !isDigit(field[0].type)) {
+  if (field[0].value === '0' || !isDigit(field[0])) {
     throw new Error(`Expected "1-9", instead found "${field[0].value}" at ${field[0].position}`)
   }
   const tokens = validate(field)

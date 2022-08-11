@@ -1,5 +1,4 @@
-import { isDash } from './tokenTypes.js'
-import { Token } from './createTokens.js'
+import { Token, isDash } from './token.js'
 
 export type CastlingAbility = {
   whiteKing: boolean;
@@ -9,12 +8,12 @@ export type CastlingAbility = {
 }
 
 export const parseCastlingAbility = (field: Token[]): CastlingAbility | undefined => {
-  if (field.length === 1 && isDash(field[0].type)) {
+  if (field.length === 1 && isDash(field[0])) {
     return undefined
   }
 
   if (field.length > 4) {
-    throw new Error(`Castling ability field too long. Expected 4, instead found "${field[0].value}" at ${field[0].position}`)
+    throw new Error(`Castling ability field too long. Expected 4, instead found "${field.length}" at ${field.at(-1)?.position}`)
   }
 
   const castlingAbility: CastlingAbility = { 
