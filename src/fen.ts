@@ -2,19 +2,19 @@ import { createTokens } from './createTokens.js'
 import { collapseWhiteSpace } from './collapseWhiteSpace.js'
 import { createFields } from './createFields.js'
 import { parsePieceField, type Piece } from './parsePieceField.js'
-import { parseSideToMove } from './parseSideToMove.js'
-import { parseCastlingAbility, type CastlingAbility } from './parseCastlingAbility.js'
+import { parseActiveColor } from './parseActiveColor.js'
+import { parseCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
 import { parseEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
-import { parseHalfMoveClock, parseFullMoveClock } from './parseClocks.js'
+import { parseHalfMoveClock, parseFullMoveNumber } from './parseClocks.js'
 
 type FenObject = {
   fenString: string;
   piecePlacement: Piece[];
-  sideToMove: string;
-  castlingAbility: CastlingAbility | undefined;
+  activeColor: string;
+  castlingAvailability: CastlingAvailability | undefined;
   enPassantTargetSquare: string | undefined;
   halfMoveClock: number;
-  fullMoveClock: number;
+  fullMoveNumber: number;
 }
 
 export const parseFen = (fenString = '', strict = false) => {
@@ -26,11 +26,11 @@ export const parseFen = (fenString = '', strict = false) => {
   const fenObject: FenObject = {
     fenString,
     piecePlacement: parsePieceField(fields[0]),
-    sideToMove: parseSideToMove(fields[1]),
-    castlingAbility: parseCastlingAbility(fields[2]),
+    activeColor: parseActiveColor(fields[1]),
+    castlingAvailability: parseCastlingAvailability(fields[2]),
     enPassantTargetSquare: parseEnPassantTargetSquare(fields[3]),
     halfMoveClock: parseHalfMoveClock(fields[4]),
-    fullMoveClock: parseFullMoveClock(fields[5])
+    fullMoveNumber: parseFullMoveNumber(fields[5])
   }
   return fenObject
 }

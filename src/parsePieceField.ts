@@ -21,9 +21,11 @@ type PieceTypes = {
   q: 'Queen';
 }
 
+const fieldName = 'Piece placement data'
+
 const validate = (tokens: Token[]) => {
   if (isSlash(tokens[0])) {
-    throw new Error(`Invalid character. Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[0].value}" at ${tokens[0].position}`)
+    throw new Error(`${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[0].value}" at ${tokens[0].position}`)
   }
   let fileCount = 0
   let rankCount = 1
@@ -33,40 +35,40 @@ const validate = (tokens: Token[]) => {
     // Validate the current token type and update counts
     if (isDigit(currentToken)) {
       if (nextToken && isDigit(nextToken)) {
-        throw new Error(`Invalid character. Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "/", instead found "${nextToken.value}" at ${nextToken.position}.`)
+        throw new Error(`${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "/", instead found "${nextToken.value}" at ${nextToken.position}.`)
       }
       let currentTokenValue = Number(currentToken.value)
       if (currentTokenValue < 1 || currentTokenValue > 8) {
-        throw new Error (`Invalid character. Numbers must be between 1-8, instead found "${currentToken.value}" at ${currentToken.position}`)
+        throw new Error (`${fieldName}: Numbers must be between 1-8, instead found "${currentToken.value}" at ${currentToken.position}`)
       }
       fileCount = fileCount + currentTokenValue
     } 
     else if (isAlpha(currentToken)) {
       if (!currentToken.value.match(whitePiecePattern) && !currentToken.value.match(blackPiecePattern)) {
-        throw new Error(`Invalid character. Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${currentToken.value}" at ${currentToken.position}`)
+        throw new Error(`${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${currentToken.value}" at ${currentToken.position}`)
       }
       fileCount = fileCount + 1
     }
     else if (isSlash(currentToken)) {
       if (nextToken && isSlash(nextToken)) {
-        throw new Error(`Invalid character. Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "/" at ${nextToken.position}`)
+        throw new Error(`${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "/" at ${nextToken.position}`)
       }
       // We know this must be slash because we validated the current token type already
       rankCount = rankCount + 1
       if (fileCount !== 8 ) {
-        throw new Error(`Invalid file count. Expected "8", but found "${fileCount}" at ${currentToken.position}`)
+        throw new Error(`I${fieldName}: Invalid file count. Expected "8", but found "${fileCount}" at ${currentToken.position}`)
       }
       fileCount = 0
     }
     else {
-      throw new Error(`Invalid character. Expected "p|r|n|b|q|k|P|R|N|B|Q|K", "1-8" or "/", instead found "${currentToken.value}" at ${currentToken.position}`)
+      throw new Error(`${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", "1-8" or "/", instead found "${currentToken.value}" at ${currentToken.position}`)
     }
     if (fileCount > 8) {
-      throw new Error(`Invalid file count. Value must not exceed "8", instead found "${fileCount}" at ${currentToken.position}`)
+      throw new Error(`${fieldName}: Invalid file count. Value must not exceed "8", instead found "${fileCount}" at ${currentToken.position}`)
     }
   }
   if (rankCount !== 8) {
-    throw new Error(`Invalid rank count. Value must be "8", instead found "${rankCount}" in piece placement field.`)
+    throw new Error(`${fieldName}: Invalid rank count. Value must be "8", instead found "${rankCount}" in piece placement field.`)
   }
   return tokens
 }
