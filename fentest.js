@@ -1,3 +1,3 @@
-import { parseFen } from './dist/fen.js'
+import { parseFen } from './dist/index.js'
 
 console.log(parseFen(process.argv[2]))
