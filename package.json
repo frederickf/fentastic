@@ -2,25 +2,32 @@
   "name": "fenjs",
   "version": "0.0.1",
   "description": "JavaScript library for parsing Forsyth-Edwards Notiation (FEN)",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "precompile": "npm run clean",
-    "compile": "tsc",
-    "clean": "rimraf dist/"
+  "author": "Frederick C. Feibel",
+  "license": "MIT",
+  "homepage": "https://github.com/frederickf/fenjs#readme",
+  "bugs": {
+    "url": "https://github.com/frederickf/fenjs/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/frederickf/fenjs.git"
   },
-  "author": "Frederick C. Feibel",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/frederickf/fenjs/issues"
-  },
-  "homepage": "https://github.com/frederickf/fenjs#readme",
   "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "rimraf dist/",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc --outDir dist/esm",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs"
+  },
   "devDependencies": {
     "@types/node": "^18.6.3",
     "rimraf": "^3.0.2",

@@ -7,6 +7,8 @@ import { parseCastlingAvailability, type CastlingAvailability } from './parseCas
 import { parseEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
 import { parseHalfMoveClock, parseFullMoveNumber } from './parseClocks.js'
 
+export { type Piece, type CastlingAvailability }
+
 export type FenObject = {
   fen: string;
   piecePlacement: Piece[];
@@ -21,7 +23,7 @@ export class FenError {
   constructor(public message: string, public fen: string) {}
 }
 
-export const parseFen = (fen = '', strict = false) => {
+export const parseFen = (fen = '', strict = false): FenObject | FenError => {
   let response: FenObject | FenError
   try {
     let tokens = createTokens(fen.trim())
