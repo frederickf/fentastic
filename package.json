@@ -18,7 +18,7 @@
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.cjs"
+      "require": "./dist/cjs/index.js"
     }
   },
   "scripts": {
@@ -26,7 +26,8 @@
     "prebuild": "rimraf dist/",
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --outDir dist/esm",
-    "build:cjs": "tsc --module CommonJS --outDir dist/cjs"
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
+    "postbuild": "node writeDistPackage.js"
   },
   "devDependencies": {
     "@types/node": "^18.6.3",

@@ -1,4 +1,5 @@
 import { type Token, isDash } from './token.js'
+import { ParseError } from './Errors.js';
 
 export type CastlingAvailability = {
   whiteKing: boolean;
@@ -15,7 +16,12 @@ export const parseCastlingAvailability = (field: Token[]): CastlingAvailability 
   }
 
   if (field.length > 4) {
-    throw new Error(`${fieldName}: Field too long. Expected 4, instead found "${field.length}" at ${field.at(-1)?.position}`)
+    // TS thinks the last element could be undefined so I had to cast here
+    const lastToken = field[field.length - 1]
+    throw new ParseError(
+      `${fieldName}: Field too long. Expected 4, instead found "${field.length}" at ${lastToken.position}`,
+      lastToken.position
+    )
   }
 
   const castlingAvailability: CastlingAvailability = { 
@@ -50,11 +56,17 @@ export const parseCastlingAvailability = (field: Token[]): CastlingAvailability 
         castlingAvailability.blackQueen = true
         break
       default:
-        throw new Error(`${fieldName}: Expected "K|Q|k|q|-", instead found "${field[i].value}" at ${field[i].position}`)
+        throw new ParseError(
+          `${fieldName}: Expected "K|Q|k|q|-", instead found "${field[i].value}" at ${field[i].position}`,
+          field[i].position
+        )
     }
     let next = field[i + 1]
     if (next && !nextValid.includes(next.value)) {
-      throw new Error(`${fieldName}: Expected ${nextError}, instead found ${next.value} at ${next.position}`)
+      throw new ParseError(
+        `${fieldName}: Expected ${nextError}, instead found ${next.value} at ${next.position}`,
+        next.position
+      )
     }
   }
 

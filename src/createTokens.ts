@@ -4,6 +4,7 @@ import {
 import {
   type Token, createAlphaToken, createSlashToken, createWsToken, createDashToken, createDigitToken
 } from './token.js'
+import { ParseError } from './Errors.js'
 
 export const createTokens = (fenstr = ''): Token[] => {
   const tokens: Token[] = []
@@ -26,7 +27,7 @@ export const createTokens = (fenstr = ''): Token[] => {
       tokens.push(createDigitToken(char, i))
     }
     else {
-      throw new Error(`Invalid character "${char}" at position ${i}`)
+      throw new ParseError(`Invalid character "${char}" at position ${i}`, i)
     }
   }
   return tokens

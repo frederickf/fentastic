@@ -6,8 +6,9 @@ import { parseActiveColor } from './parseActiveColor.js'
 import { parseCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
 import { parseEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
 import { parseHalfMoveClock, parseFullMoveNumber } from './parseClocks.js'
+import { FenError, ParseError } from './Errors.js'
 
-export { type Piece, type CastlingAvailability }
+export { type Piece, type CastlingAvailability, FenError}
 
 export type FenObject = {
   fen: string;
@@ -19,19 +20,14 @@ export type FenObject = {
   fullMoveNumber: number;
 }
 
-export class FenError {
-  constructor(public message: string, public fen: string) {}
-}
-
 export const parseFen = (fen = '', strict = false): FenObject | FenError => {
-  let response: FenObject | FenError
   try {
     let tokens = createTokens(fen.trim())
     if (!strict) {
       tokens = collapseWhiteSpace(tokens)
     }
     const fields = createFields(tokens)
-    response = {
+    return {
       fen,
       piecePlacement: parsePieceField(fields[0]),
       activeColor: parseActiveColor(fields[1]),
@@ -42,10 +38,10 @@ export const parseFen = (fen = '', strict = false): FenObject | FenError => {
     }
   }
   catch(e) {
-    const message = e instanceof Error ? e.message: "Unknown error"
-    response = new FenError(message, fen)
+    if (e instanceof ParseError) {
+      return new FenError(e.message, e.position, fen)
+    }
+    throw e
   }
-
-  return response
 }
 

@@ -1,21 +1,27 @@
 import { type Token, isWhiteSpace } from './token.js'
+import { ParseError } from './Errors.js'
 
 export const createFields = (tokens: Token[]) => {
   const fields: Token[][] = []
   let currentField: Token[] = []
-  for (let currentToken of tokens) {
-    if (!isWhiteSpace(currentToken)) {
-      currentField.push(currentToken)
+  for (let i = 0; i < tokens.length; i++) {
+    if (!isWhiteSpace(tokens[i])) {
+      currentField.push(tokens[i])
     }
-    else {
+
+    if (isWhiteSpace(tokens[i]) || i === tokens.length - 1) {
       fields.push(currentField)
       currentField = []
     }
   }
-  fields.push(currentField)
 
   if (fields.length !== 6) {
-    throw new Error(`Invalid field count. Found ${fields.length}. Expected 6.`)
+    // I can't think of a better position for this error
+    const last = tokens[tokens.length - 1]
+    throw new ParseError(
+      `Invalid field count. Expected "6" fields, found ${fields.length} at ${last.position}.`,
+      last.position
+    )
   }
 
   return fields
