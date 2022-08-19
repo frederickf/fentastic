@@ -12,7 +12,7 @@ export { type Piece, type CastlingAvailability, ParseError }
 
 export type ValidFen = {
   fen: string;
-  valid: boolean;
+  valid: true;
   piecePlacement: Piece[];
   activeColor: string;
   castlingAvailability: CastlingAvailability | undefined;
@@ -23,11 +23,11 @@ export type ValidFen = {
 
 export type InvalidFen = {
   fen: string;
-  valid: boolean;
+  valid: false;
   error: ParseError;
 }
 
-export const parseFen = (fen = ''): ValidFen | InvalidFen => {
+export const parseFen = (fen: string): ValidFen | InvalidFen => {
   try {
     let tokens = createTokens(fen)
     const fields = createFields(tokens)

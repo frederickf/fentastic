@@ -45,7 +45,6 @@ export const parseHalfMoveClock = (field: Token[]): number => {
 }
 
 export const parseFullMoveNumber = (field: Token[]): number => {
-  console.log('parseFullMoveNumber', field)
   if (field[0].value === '0' || !isDigit(field[0])) {
     throw new ParseError(
       `${fullMoveName}: Expected "1-9", instead found "${field[0].value}" at ${field[0].position}`,
