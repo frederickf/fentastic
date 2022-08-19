@@ -4,7 +4,7 @@ import {
 import {
   type Token, createAlphaToken, createSlashToken, createWsToken, createDashToken, createDigitToken
 } from './token.js'
-import { ParseError } from './Errors.js'
+import { ParseError } from './ParseError.js'
 
 export const createTokens = (fenstr = ''): Token[] => {
   const tokens: Token[] = []

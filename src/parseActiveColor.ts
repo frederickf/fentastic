@@ -1,5 +1,5 @@
 import { type Token } from './token.js'
-import { ParseError } from './Errors.js'
+import { ParseError } from './ParseError.js'
 
 const fieldName = 'Active color'
 export const parseActiveColor = (field: Token[]): 'white' | 'black' => {

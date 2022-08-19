@@ -1,5 +1,5 @@
 import { type Token, isWhiteSpace } from './token.js'
-import { ParseError } from './Errors.js'
+import { ParseError } from './ParseError.js'
 
 export const createFields = (tokens: Token[]) => {
   const fields: Token[][] = []

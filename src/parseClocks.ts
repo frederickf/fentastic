@@ -1,5 +1,5 @@
 import { type Token, isDigit} from './token.js'
-import { ParseError } from './Errors.js'
+import { ParseError } from './ParseError.js'
 
 const validate = (tokens: Token[], fieldName: string): Token[] => {
   for (let token of tokens) {

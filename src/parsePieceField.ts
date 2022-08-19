@@ -1,6 +1,6 @@
 import { whitePiecePattern, blackPiecePattern } from './patterns.js'
 import { type Token, isDigit, isSlash, isAlpha } from './token.js'
-import { ParseError } from './Errors.js'
+import { ParseError } from './ParseError.js'
 
 type PieceToken = Token & {
   rank: number;

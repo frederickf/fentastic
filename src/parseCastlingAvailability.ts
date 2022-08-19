@@ -1,5 +1,5 @@
 import { type Token, isDash } from './token.js'
-import { ParseError } from './Errors.js';
+import { ParseError } from './ParseError.js';
 
 export type CastlingAvailability = {
   whiteKing: boolean;

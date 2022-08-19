@@ -1,6 +1,6 @@
 import { rankPattern, enPassantFilePattern } from './patterns.js'
 import { type Token, isDash } from './token.js'
-import { ParseError } from './Errors.js'
+import { ParseError } from './ParseError.js'
 
 const fieldName = 'En passant target square'
 export const parseEnPassantTargetSquare = (field: Token[] ): string | undefined => {

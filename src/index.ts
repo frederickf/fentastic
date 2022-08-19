@@ -6,12 +6,13 @@ import { parseActiveColor } from './parseActiveColor.js'
 import { parseCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
 import { parseEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
 import { parseHalfMoveClock, parseFullMoveNumber } from './parseClocks.js'
-import { FenError, ParseError } from './Errors.js'
+import { ParseError } from './ParseError.js'
 
-export { type Piece, type CastlingAvailability, FenError}
+export { type Piece, type CastlingAvailability, ParseError }
 
-export type FenObject = {
+export type ValidFen = {
   fen: string;
+  valid: boolean;
   piecePlacement: Piece[];
   activeColor: string;
   castlingAvailability: CastlingAvailability | undefined;
@@ -20,15 +21,19 @@ export type FenObject = {
   fullMoveNumber: number;
 }
 
-export const parseFen = (fen = '', strict = false): FenObject | FenError => {
+export type InvalidFen = {
+  fen: string;
+  valid: boolean;
+  error: ParseError;
+}
+
+export const parseFen = (fen = ''): ValidFen | InvalidFen => {
   try {
-    let tokens = createTokens(fen.trim())
-    if (!strict) {
-      tokens = collapseWhiteSpace(tokens)
-    }
+    let tokens = createTokens(fen)
     const fields = createFields(tokens)
     return {
       fen,
+      valid: true,
       piecePlacement: parsePieceField(fields[0]),
       activeColor: parseActiveColor(fields[1]),
       castlingAvailability: parseCastlingAvailability(fields[2]),
@@ -39,7 +44,11 @@ export const parseFen = (fen = '', strict = false): FenObject | FenError => {
   }
   catch(e) {
     if (e instanceof ParseError) {
-      return new FenError(e.message, e.position, fen)
+      return {
+        fen,
+        valid: false,
+        error: e
+      }
     }
     throw e
   }
