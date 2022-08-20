@@ -7,8 +7,9 @@ JavaScript library for parsing Forsyth-Edwards Notiation (FEN)
 npm install fenjs
 ```
 
-## About
+## About fenjs
 
+There are other FEN parsers and validators, and it's not really that difficult to write one. Split on white space, split the piece placement field on "/", then apply few regexs to each field and you're done. While is a perfectly valid approach, it is missing something: detailed error messages that identify why the FEN is invalid, including the expected characters, the characters found to be invalid and the location in the string where the error was found. fenjs provides those error messages. 
 
 
 ## Usage
@@ -19,12 +20,18 @@ Use the parseFen function to evaluate a FEN string. If valid, a object represent
 import { parseFen } from 'fenjs'
 const result = parseFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
 
-if (!result.valid) {
-  //  There was a problem with the FEN string  
+if (result.valid) {
+  // The FEN is valid
+  // See the Valid result section below to learn about the keys on a valid result
+}
+else {
+  // There is a problem with FEN
+  // See the Invalid result section below to learn about the keys on a valid result 
 }
 ```
 
 ### Valid result
+A valid result will be an object consisting of keys with names based on the FEN fields defined in PGN_standard Section "16.1: FEN
 ```
 {
   fen: string 
