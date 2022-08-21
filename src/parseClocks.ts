@@ -14,26 +14,9 @@ const validate = (tokens: Token[], fieldName: string): Token[] => {
   return tokens
 }
 
-const concatClockValues = (tokens: Token[], fieldName: string): number => {
-  let value = ''
-  for (let token of tokens) {
-    if (isDigit(token)) {
-      value = `${value}${token.value}`
-    }
-    else {
-      throw new ParseError(
-        `${fieldName}: Expected "0-9", instead found "${token.value}" at ${token.position}`,
-        token.position
-      )
-    }
-  }
-  return Number(value)
-}
-
 const halfMoveName = 'Halfmove clock'
-const fullMoveName = 'Fullmove number'
 
-export const parseHalfMoveClock = (field: Field): number => {
+export const validateHalfMoveClock = (field: Field): Field => {
   const tokens = validate(field.tokens, halfMoveName)
   const fieldValue = Number(field.value)
   if (fieldValue > 100) {
@@ -42,16 +25,23 @@ export const parseHalfMoveClock = (field: Field): number => {
       tokens[0].position
     )
   }
-  return fieldValue
+  return field
 }
 
-export const parseFullMoveNumber = (field: Field): number => {
-  if (field.tokens[0].value === '0' || !isDigit(field.tokens[0])) {
+export const parseHalfMoveClock = (field: Field): number => Number(field.value)
+
+
+const fullMoveName = 'Fullmove number'
+
+export const validateFullMoveNumber = (field: Field): Field => {
+  if (field.tokens[0].value === '0') {
     throw new ParseError(
-      `${fullMoveName}: Expected "1-9", instead found "${field.tokens[0].value}" at ${field.tokens[0].position}`,
+      `${fullMoveName}: Expected "1-9", instead found "0" at ${field.tokens[0].position}`,
       field.tokens[0].position
       )
   }
   validate(field.tokens, fullMoveName)
-  return Number(field.value)
+  return field
 }
+
+export const parseFullMoveNumber = (field: Field): number => Number(field.value)

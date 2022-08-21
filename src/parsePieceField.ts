@@ -1,6 +1,6 @@
 import { whitePiecePattern, blackPiecePattern } from './patterns.js'
 import { type Token, isDigit, isSlash, isAlpha } from './token.js'
-import { Field } from './createFields.js'
+import { type Field } from './createFields.js'
 import { ParseError } from './ParseError.js'
 
 type PieceToken = Token & {
@@ -25,7 +25,8 @@ type PieceTypes = {
 
 const fieldName = 'Piece placement data'
 
-const validate = (tokens: Token[]) => {
+export const validatePieceField = (field: Field): Field => {
+  const tokens: Token[] = field.tokens;
   if (isSlash(tokens[0])) {
     throw new ParseError(
       `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[0].value}" at ${tokens[0].position}`,
@@ -114,7 +115,7 @@ const validate = (tokens: Token[]) => {
       tokens[lastSlashIndex].position
     )
   }
-  return tokens
+  return field
 }
 
 const createPieceTokens = (tokens: Token[]): PieceToken[] => {
@@ -154,7 +155,6 @@ const createPieces = (tokens: PieceToken[]): Piece[] => {
 }
 
 export const parsePieceField = (field: Field): Piece[]  => {
-  const validTokens = validate(field.tokens)
-  const pieceTokens = createPieceTokens(validTokens)
+  const pieceTokens = createPieceTokens(field.tokens)
   return createPieces(pieceTokens)
 }

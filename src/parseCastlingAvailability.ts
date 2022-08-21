@@ -11,26 +11,18 @@ export type CastlingAvailability = {
 
 const fieldName = 'Castling availability'
 
-export const parseCastlingAvailability = (field: Field): CastlingAvailability | undefined => {
+export const validateCastlingAvailability = (field: Field): Field => {
   if (field.tokens.length === 1 && isDash(field.tokens[0])) {
-    return undefined
+    return field
   }
 
   if (field.tokens.length > 4) {
-    // TS thinks the last element could be undefined so I had to cast here
     const lastToken = field.tokens[field.tokens.length - 1]
     throw new ParseError(
-      `${fieldName}: Field too long. Expected 4, instead found "${field.tokens.length}" at ${lastToken.position}`,
+      `${fieldName}: Expected "4", instead found "${field.tokens.length}" at ${lastToken.position}`,
       lastToken.position
     )
   }
-
-  const castlingAvailability: CastlingAvailability = { 
-    whiteKing: false,
-    whiteQueen: false, 
-    blackKing: false,
-    blackQueen: false
- }
 
   for (let i = 0; i < field.tokens.length; i++) {
     let nextValid: string[]
@@ -39,22 +31,18 @@ export const parseCastlingAvailability = (field: Field): CastlingAvailability | 
       case 'K':
         nextValid = ['Q', 'k', 'q']
         nextError = 'Q|k|q'
-        castlingAvailability.whiteKing = true
         break;
       case 'Q':
         nextValid = ['k', 'q']
         nextError = 'k|q'
-        castlingAvailability.whiteQueen = true
         break
       case 'k':
         nextValid = ['q']
         nextError = 'q'
-        castlingAvailability.blackKing = true
         break
       case 'q':
         nextValid = []
         nextError = 'q to be the last value'
-        castlingAvailability.blackQueen = true
         break
       default:
         throw new ParseError(
@@ -65,9 +53,44 @@ export const parseCastlingAvailability = (field: Field): CastlingAvailability | 
     let next = field.tokens[i + 1]
     if (next && !nextValid.includes(next.value)) {
       throw new ParseError(
-        `${fieldName}: Expected ${nextError}, instead found ${next.value} at ${next.position}`,
+        `${fieldName}: Expected "${nextError}", instead found "${next.value}" at ${next.position}`,
         next.position
       )
+    }
+  }
+
+  return field
+}
+
+
+export const parseCastlingAvailability = (field: Field): CastlingAvailability | undefined => {
+  if (field.tokens.length === 1 && isDash(field.tokens[0])) {
+    return undefined
+  }
+
+  const castlingAvailability: CastlingAvailability = { 
+    whiteKing: false,
+    whiteQueen: false, 
+    blackKing: false,
+    blackQueen: false
+ }
+
+  for (let i = 0; i < field.tokens.length; i++) {
+    switch(field.tokens[i].value) {
+      case 'K':
+        castlingAvailability.whiteKing = true
+        break;
+      case 'Q':
+        castlingAvailability.whiteQueen = true
+        break
+      case 'k':
+        castlingAvailability.blackKing = true
+        break
+      case 'q':
+        castlingAvailability.blackQueen = true
+        break
+      default:
+        // TODO: Conider refactoring so I can use a typescript "never" check here
     }
   }
 

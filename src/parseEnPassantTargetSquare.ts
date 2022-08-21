@@ -4,10 +4,10 @@ import { ParseError } from './ParseError.js'
 import { type Field } from './createFields.js'
 
 const fieldName = 'En passant target square'
-export const parseEnPassantTargetSquare = (field: Field ): string | undefined => {
+export const validateEnPassantTargetSquare = (field: Field ): Field => {
   if (field.tokens.length === 1) {
     if (isDash(field.tokens[0])) {
-      return undefined
+      return field
     }
     else {
       throw new ParseError(
@@ -38,6 +38,12 @@ export const parseEnPassantTargetSquare = (field: Field ): string | undefined =>
     )
   }
 
-  return field.value
+  return field
+}
 
+export const parseEnPassantTargetSquare = (field: Field): string | undefined => {
+  if (isDash(field.tokens[0])) {
+    return undefined
+  }
+  return field.value
 }

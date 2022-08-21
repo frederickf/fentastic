@@ -1,11 +1,10 @@
 import { createTokens } from './createTokens.js'
-import { collapseWhiteSpace } from './collapseWhiteSpace.js'
 import { createFields } from './createFields.js'
-import { parsePieceField, type Piece } from './parsePieceField.js'
-import { parseActiveColor } from './parseActiveColor.js'
-import { parseCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
-import { parseEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
-import { parseHalfMoveClock, parseFullMoveNumber } from './parseClocks.js'
+import { parsePieceField, validatePieceField, type Piece } from './parsePieceField.js'
+import { parseActiveColor, validateActiveColor } from './parseActiveColor.js'
+import { parseCastlingAvailability, validateCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
+import { parseEnPassantTargetSquare, validateEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
+import { parseHalfMoveClock, validateHalfMoveClock, parseFullMoveNumber, validateFullMoveNumber } from './parseClocks.js'
 import { ParseError } from './ParseError.js'
 
 export { type Piece, type CastlingAvailability, ParseError }
@@ -31,6 +30,14 @@ export const parseFen = (fen: string): ValidFen | InvalidFen => {
   try {
     let tokens = createTokens(fen)
     const fields = createFields(tokens)
+
+    validatePieceField(fields[0])
+    validateActiveColor(fields[1])
+    validateCastlingAvailability(fields[2])
+    validateEnPassantTargetSquare(fields[3])
+    validateHalfMoveClock(fields[4])
+    validateFullMoveNumber(fields[5])
+
     return {
       fen,
       valid: true,
