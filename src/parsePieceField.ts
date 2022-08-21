@@ -1,5 +1,6 @@
 import { whitePiecePattern, blackPiecePattern } from './patterns.js'
 import { type Token, isDigit, isSlash, isAlpha } from './token.js'
+import { Field } from './createFields.js'
 import { ParseError } from './ParseError.js'
 
 type PieceToken = Token & {
@@ -152,8 +153,8 @@ const createPieces = (tokens: PieceToken[]): Piece[] => {
   return pieces
 }
 
-export const parsePieceField = (field: Token[]) => {
-  const validTokens = validate(field)
+export const parsePieceField = (field: Field): Piece[]  => {
+  const validTokens = validate(field.tokens)
   const pieceTokens = createPieceTokens(validTokens)
   return createPieces(pieceTokens)
 }

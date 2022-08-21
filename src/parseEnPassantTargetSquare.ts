@@ -1,42 +1,43 @@
 import { rankPattern, enPassantFilePattern } from './patterns.js'
 import { type Token, isDash } from './token.js'
 import { ParseError } from './ParseError.js'
+import { type Field } from './createFields.js'
 
 const fieldName = 'En passant target square'
-export const parseEnPassantTargetSquare = (field: Token[] ): string | undefined => {
-  if (field.length === 1) {
-    if (isDash(field[0])) {
+export const parseEnPassantTargetSquare = (field: Field ): string | undefined => {
+  if (field.tokens.length === 1) {
+    if (isDash(field.tokens[0])) {
       return undefined
     }
     else {
       throw new ParseError(
-        `${fieldName}: Expected "-", instead found "${field[0].value}" at ${field[0].position}`,
-        field[0].position
+        `${fieldName}: Expected "-", instead found "${field.value}" at ${field.tokens[0].position}`,
+        field.tokens[0].position
       )
     }
   }
 
-  if (field.length !== 2) {
+  if (field.tokens.length !== 2) {
     throw new ParseError(
-      `${fieldName}: Expected 2 characters in en passant field, found ${field.length}, at ${field[0].position}`,
-      field[0].position
+      `${fieldName}: Expected 2 characters, instead found ${field.tokens.length}, at ${field.tokens[0].position}`,
+      field.tokens[0].position
     )
   }
   
-  if (!field[0].value.match(rankPattern)) {
+  if (!field.tokens[0].value.match(rankPattern)) {
     throw new ParseError(
-      `${fieldName}: Expected "[a-h]", instead found "${field[0].value}" at ${field[0].position}`,
-      field[0].position
+      `${fieldName}: Expected "[a-h]", instead found "${field.tokens[0].value}" at ${field.tokens[0].position}`,
+      field.tokens[0].position
     )
   }
 
-  if (!field[1].value.match(enPassantFilePattern)) {
+  if (!field.tokens[1].value.match(enPassantFilePattern)) {
     throw new ParseError(
-      `${fieldName}: Expected "3|6", instead found "${field[1].value}" at ${field[1].position}`,
-      field[1].position
+      `${fieldName}: Expected "3|6", instead found "${field.tokens[1].value}" at ${field.tokens[1].position}`,
+      field.tokens[1].position
     )
   }
 
-  return `${field[0].value}${field[1].value}`
+  return field.value
 
 }

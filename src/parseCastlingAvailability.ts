@@ -1,5 +1,6 @@
 import { type Token, isDash } from './token.js'
 import { ParseError } from './ParseError.js';
+import { type Field } from './createFields.js'
 
 export type CastlingAvailability = {
   whiteKing: boolean;
@@ -10,16 +11,16 @@ export type CastlingAvailability = {
 
 const fieldName = 'Castling availability'
 
-export const parseCastlingAvailability = (field: Token[]): CastlingAvailability | undefined => {
-  if (field.length === 1 && isDash(field[0])) {
+export const parseCastlingAvailability = (field: Field): CastlingAvailability | undefined => {
+  if (field.tokens.length === 1 && isDash(field.tokens[0])) {
     return undefined
   }
 
-  if (field.length > 4) {
+  if (field.tokens.length > 4) {
     // TS thinks the last element could be undefined so I had to cast here
-    const lastToken = field[field.length - 1]
+    const lastToken = field.tokens[field.tokens.length - 1]
     throw new ParseError(
-      `${fieldName}: Field too long. Expected 4, instead found "${field.length}" at ${lastToken.position}`,
+      `${fieldName}: Field too long. Expected 4, instead found "${field.tokens.length}" at ${lastToken.position}`,
       lastToken.position
     )
   }
@@ -31,10 +32,10 @@ export const parseCastlingAvailability = (field: Token[]): CastlingAvailability 
     blackQueen: false
  }
 
-  for (let i = 0; i < field.length; i++) {
+  for (let i = 0; i < field.tokens.length; i++) {
     let nextValid: string[]
     let nextError: string
-    switch(field[i].value) {
+    switch(field.tokens[i].value) {
       case 'K':
         nextValid = ['Q', 'k', 'q']
         nextError = 'Q|k|q'
@@ -57,11 +58,11 @@ export const parseCastlingAvailability = (field: Token[]): CastlingAvailability 
         break
       default:
         throw new ParseError(
-          `${fieldName}: Expected "K|Q|k|q|-", instead found "${field[i].value}" at ${field[i].position}`,
-          field[i].position
+          `${fieldName}: Expected "K|Q|k|q|-", instead found "${field.tokens[i].value}" at ${field.tokens[i].position}`,
+          field.tokens[i].position
         )
     }
-    let next = field[i + 1]
+    let next = field.tokens[i + 1]
     if (next && !nextValid.includes(next.value)) {
       throw new ParseError(
         `${fieldName}: Expected ${nextError}, instead found ${next.value} at ${next.position}`,
