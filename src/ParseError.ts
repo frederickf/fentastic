@@ -4,3 +4,9 @@ export class ParseError {
     public position: number,
   ) {}
 }
+
+export class ParseErrors {
+  constructor(
+    public errors: ParseError[]
+  ) {}
+}

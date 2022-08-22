@@ -17,14 +17,24 @@ const validate = (tokens: Token[], fieldName: string): Token[] => {
 const halfMoveName = 'Halfmove clock'
 
 export const validateHalfMoveClock = (field: Field): Field => {
-  const tokens = validate(field.tokens, halfMoveName)
-  const fieldValue = Number(field.value)
-  if (fieldValue > 100) {
-    throw new ParseError(
-      `${halfMoveName}: Field can't exceed "100". Instead found "${field.value}" at ${tokens[0].position}`,
-      tokens[0].position
-    )
+  try {
+    const tokens = validate(field.tokens, halfMoveName)
+    const fieldValue = Number(field.value)
+    if (fieldValue > 100) {
+      throw new ParseError(
+        `${halfMoveName}: Field can't exceed "100". Instead found "${field.value}" at ${tokens[0].position}`,
+        tokens[0].position
+      )
+    }
+  } catch (e) {
+    if (e instanceof ParseError) {
+      field.error = e
+    }
+    else {
+      throw e
+    }
   }
+  
   return field
 }
 
@@ -34,13 +44,22 @@ export const parseHalfMoveClock = (field: Field): number => Number(field.value)
 const fullMoveName = 'Fullmove number'
 
 export const validateFullMoveNumber = (field: Field): Field => {
-  if (field.tokens[0].value === '0') {
-    throw new ParseError(
-      `${fullMoveName}: Expected "1-9", instead found "0" at ${field.tokens[0].position}`,
-      field.tokens[0].position
-      )
+  try {
+    if (field.tokens[0].value === '0') {
+      throw new ParseError(
+        `${fullMoveName}: Expected "1-9", instead found "0" at ${field.tokens[0].position}`,
+        field.tokens[0].position
+        )
+    }
+    validate(field.tokens, fullMoveName)
+  } catch (e) {
+    if (e instanceof ParseError) {
+      field.error = e
+    }
+    else {
+      throw e
+    }
   }
-  validate(field.tokens, fullMoveName)
   return field
 }
 

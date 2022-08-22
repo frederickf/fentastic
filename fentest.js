@@ -1,3 +1,8 @@
-import { parseFen } from './dist/esm/index.js'
+import { parseFen, validateFen } from './dist/esm/index.js'
 
-console.log(parseFen(process.argv[2]))
+const commands = {
+  parse: parseFen,
+  validate: validateFen
+}
+
+console.log(commands[process.argv[2]](process.argv[3]))

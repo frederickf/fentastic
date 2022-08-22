@@ -1,15 +1,15 @@
 import { createTokens } from './createTokens.js'
-import { createFields } from './createFields.js'
+import { createFields, Field } from './createFields.js'
 import { parsePieceField, validatePieceField, type Piece } from './parsePieceField.js'
 import { parseActiveColor, validateActiveColor } from './parseActiveColor.js'
 import { parseCastlingAvailability, validateCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
 import { parseEnPassantTargetSquare, validateEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
 import { parseHalfMoveClock, validateHalfMoveClock, parseFullMoveNumber, validateFullMoveNumber } from './parseClocks.js'
-import { ParseError } from './ParseError.js'
+import { ParseError, ParseErrors } from './ParseError.js'
 
 export { type Piece, type CastlingAvailability, ParseError }
 
-export type ValidFen = {
+export type ParsedFen = {
   fen: string;
   valid: true;
   piecePlacement: Piece[];
@@ -20,23 +20,65 @@ export type ValidFen = {
   fullMoveNumber: number;
 }
 
+export type ValidFen = {
+  fen: string;
+  valid: true;
+}
+
 export type InvalidFen = {
   fen: string;
   valid: false;
-  error: ParseError;
+  errors: ParseError[];
 }
 
-export const parseFen = (fen: string): ValidFen | InvalidFen => {
+const validateFields = (fields: Field[]): Field[] => {
+  validatePieceField(fields[0])
+  validateActiveColor(fields[1])
+  validateCastlingAvailability(fields[2])
+  validateEnPassantTargetSquare(fields[3])
+  validateHalfMoveClock(fields[4])
+  validateFullMoveNumber(fields[5])
+  
+  const errors: ParseError[] = []
+  for (let field of fields) {
+    if (field.error) {
+      errors.push(field.error)
+    }
+  }
+
+  if (errors.length) {
+    throw new ParseErrors(errors)
+  }
+
+  return fields
+}
+
+export const validateFen = (fen: string): ValidFen | InvalidFen => {
   try {
     let tokens = createTokens(fen)
-    const fields = createFields(tokens)
+    let fields = createFields(tokens)
 
-    validatePieceField(fields[0])
-    validateActiveColor(fields[1])
-    validateCastlingAvailability(fields[2])
-    validateEnPassantTargetSquare(fields[3])
-    validateHalfMoveClock(fields[4])
-    validateFullMoveNumber(fields[5])
+    validateFields(fields)
+
+    return { fen, valid: true }
+  }
+  catch(e) {
+    if (e instanceof ParseError) {
+      return { fen, valid: false, errors: [e] }
+    }
+    else if (e instanceof ParseErrors) {
+      return { fen, valid: false, errors: e.errors}
+    }
+    throw e
+  }
+}
+
+export const parseFen = (fen: string): ParsedFen | InvalidFen => {
+  try {
+    let tokens = createTokens(fen)
+    let fields = createFields(tokens)
+
+    fields = validateFields(fields)
 
     return {
       fen,
@@ -51,11 +93,10 @@ export const parseFen = (fen: string): ValidFen | InvalidFen => {
   }
   catch(e) {
     if (e instanceof ParseError) {
-      return {
-        fen,
-        valid: false,
-        error: e
-      }
+      return { fen, valid: false, errors: [e] }
+    }
+    else if (e instanceof ParseErrors) {
+      return { fen, valid: false, errors: e.errors}
     }
     throw e
   }
