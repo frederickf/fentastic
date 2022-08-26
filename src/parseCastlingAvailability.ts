@@ -12,11 +12,19 @@ export type CastlingAvailability = {
 const fieldName = 'Castling availability'
 
 export const validateCastlingAvailability = (field: Field): Field => {
-  if (field.tokens.length === 1 && isDash(field.tokens[0])) {
-    return field
-  }
-
   try {
+    if (!field.tokens.length) {
+      throw new ParseError(
+        `${fieldName}: Expected "-|Q|K|q|k, instead found "" at ${field.delimeter.position}`,
+        field.delimeter.position
+      )
+    }
+
+    if (field.tokens.length === 1 && isDash(field.tokens[0])) {
+      return field
+    }
+
+  
     if (field.tokens.length > 4) {
       const lastToken = field.tokens[field.tokens.length - 1]
       throw new ParseError(
@@ -26,8 +34,8 @@ export const validateCastlingAvailability = (field: Field): Field => {
     }
   
     for (let i = 0; i < field.tokens.length; i++) {
-      let nextValid: string[]
-      let nextError: string
+      let nextValid: string[] = []
+      let nextError: string = ''
       switch(field.tokens[i].value) {
         case 'K':
           nextValid = ['Q', 'k', 'q']

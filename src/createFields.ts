@@ -1,35 +1,15 @@
 import { type Token, isWhiteSpace } from './token.js'
 import { ParseError } from './ParseError.js'
+import { createTokenGroups, type TokenGroup } from './createTokenGroups.js';
 
-export type Field = {
-  value: string;
-  tokens: Token[];
-  error?: ParseError
-}
+export type Field = TokenGroup
 
 export const createFields = (tokens: Token[]): Field[] => {
-  const fields: Field[] = []
-  let fieldValue = '',
-  fieldTokens: Token[] = [];
-  for (let i = 0; i < tokens.length; i++) {
-    if (!isWhiteSpace(tokens[i])) {
-      fieldValue = fieldValue + tokens[i].value
-      fieldTokens.push(tokens[i])
-    }
-
-    if (isWhiteSpace(tokens[i]) || i === tokens.length - 1) {
-      fields.push({
-        value: fieldValue,
-        tokens: fieldTokens
-      })
-      fieldValue = ''
-      fieldTokens = []
-    }
-  }
+  const fields: Field[] = createTokenGroups(isWhiteSpace, tokens)
 
   if (fields.length !== 6) {
     // I can't think of a better position for this error
-    const last = tokens[tokens.length - 1]
+    const last: Token = tokens[tokens.length - 1]
     throw new ParseError(
       `Invalid field count. Expected "6" fields, found ${fields.length} at ${last.position}.`,
       last.position

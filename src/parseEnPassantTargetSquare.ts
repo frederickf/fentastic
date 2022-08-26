@@ -1,11 +1,18 @@
 import { rankPattern, enPassantFilePattern } from './patterns.js'
-import { type Token, isDash } from './token.js'
+import { isDash } from './token.js'
 import { ParseError } from './ParseError.js'
 import { type Field } from './createFields.js'
 
 const fieldName = 'En passant target square'
 export const validateEnPassantTargetSquare = (field: Field ): Field => {
   try {
+    if (!field.tokens.length) {
+      throw new ParseError(
+        `${fieldName}: Expected "[a-h]", instead found "" at ${field.delimeter.position}`,
+        field.delimeter.position
+      )
+    }
+
     if (field.tokens.length === 1) {
       if (isDash(field.tokens[0])) {
         return field

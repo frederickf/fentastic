@@ -6,29 +6,24 @@ import {
 } from './token.js'
 import { ParseError } from './ParseError.js'
 
-export const createTokens = (fenstr = ''): Token[] => {
-  const tokens: Token[] = []
-  for (let i = 0; i < fenstr.length; i++) {
-    let char: string = fenstr.charAt(i)
-    // We start with alpha because b is duplicated (bishop, black side, b file)
+export const createTokens = (fenstr = ''): Token[] => (
+  fenstr.split('').map((char: string, i: number): Token => {
+    // start with alpha because b is duplicated (bishop, black side, b file)
     if (char.match(alphaPattern)) {
-      tokens.push(createAlphaToken(char, i))
+      return createAlphaToken(char, i)
     } 
-    else if (char.match(slashPattern)) {
-      tokens.push(createSlashToken(char, i))
+    if (char.match(slashPattern)) {
+      return createSlashToken(char, i)
     } 
-    else if (char.match(whiteSpacePattern)) {
-      tokens.push(createWsToken(char, i))
+    if (char.match(whiteSpacePattern)) {
+      return createWsToken(char, i)
     }
-    else if (char.match(dashPattern)) {
-      tokens.push(createDashToken(char, i))
+    if (char.match(dashPattern)) {
+      return createDashToken(char, i)
     }
-    else if (char.match(digitPattern)) {
-      tokens.push(createDigitToken(char, i))
+    if (char.match(digitPattern)) {
+      return createDigitToken(char, i)
     }
-    else {
-      throw new ParseError(`Invalid character "${char}" at position ${i}`, i)
-    }
-  }
-  return tokens
-}
+    throw new ParseError(`Invalid character "${char}" at position ${i}`, i)
+  })
+)

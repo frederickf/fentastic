@@ -3,8 +3,8 @@ export type Token = {
   type: string;
   position: number;
 }
-type isOfType = (token: Token) => boolean
-type createToken = (value: string, position: number) =>Token
+export type isOfType = (token: Token) => boolean
+type createToken = (value: string, position: number) => Token
 
 const tokenIsOfType = (type: string): isOfType => token => token.type === type
 const createTokenOfType = (type: string): createToken => (value, position) => ({type, value, position})

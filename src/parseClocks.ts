@@ -18,7 +18,13 @@ const halfMoveName = 'Halfmove clock'
 
 export const validateHalfMoveClock = (field: Field): Field => {
   try {
-    const tokens = validate(field.tokens, halfMoveName)
+    if (!field.tokens.length) {
+      throw new ParseError(
+        `${fullMoveName}: Expected "0-9", instead found "" at ${field.delimeter.position}`,
+        field.delimeter.position
+      )
+    }
+    const tokens: Token[] = validate(field.tokens, halfMoveName)
     const fieldValue = Number(field.value)
     if (fieldValue > 100) {
       throw new ParseError(
@@ -45,6 +51,13 @@ const fullMoveName = 'Fullmove number'
 
 export const validateFullMoveNumber = (field: Field): Field => {
   try {
+    if (!field.tokens.length) {
+      throw new ParseError(
+        `${fullMoveName}: Expected "1-9", instead found "" at ${field.delimeter.position}`,
+        field.delimeter.position
+      )
+    }
+
     if (field.tokens[0].value === '0') {
       throw new ParseError(
         `${fullMoveName}: Expected "1-9", instead found "0" at ${field.tokens[0].position}`,
