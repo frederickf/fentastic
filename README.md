@@ -9,15 +9,18 @@ npm install fenjs
 
 ## About fenjs
 
-There are other FEN parsers and validators, and it's not really that difficult to write one. Split on white space, split the piece placement field on "/", then apply few regexs to each field and you're done. While is a perfectly valid approach, it is missing something: detailed error messages that identify why the FEN is invalid, including the expected characters, the characters found to be invalid and the location in the string where the error was found. fenjs provides those error messages. 
+There are other FEN parsers and validators, and it's not really that difficult to write one. Split on white space, split the piece placement field on "/", then apply few regexs to each field and you're done. While this is a perfectly valid approach, it is missing something: detailed error messages that identify why the FEN is invalid, including the expected characters, the characters found to be invalid and the location in the string where the error was found. fenjs provides those error messages. 
 
 
 ## Usage
 
-Use the parseFen function to evaluate a FEN string. If valid, a object representing each field will be returned. If invalid, an object containing a detailed error message will be return. You can differentiate between the two using the `valid` boolean property.
+Use the `validateFen()` or `parseFen()` to evaluate a FEN string. Both will validate the FEN based on the FEN standard and return an object with a boolean valid key. `parseFen() will also return structured data describing the FEN (see Valid results section below)
 
 ```
-import { parseFen } from 'fenjs'
+// require is also supported
+import { validateFen, parseFen } from 'fenjs'
+
+// Use parseFen(str) or validateFen(str)
 const result = parseFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
 
 if (result.valid) {
@@ -31,11 +34,16 @@ else {
 ```
 
 ### Valid result
-A valid result will be an object consisting of keys with names based on the FEN fields defined in PGN_standard Section "16.1: FEN
+| Header | Header |
+| - | - |
+| validateFen | A valid result will be an object consisting of the input fen and `valid: true`
+| parseFen | A valid result will be an object consisting of the input fen, `valid: true` and keys with names based on the FEN fields defined in PGN_standard Section "16.1: FEN |
+
 ```
 {
   fen: string 
-  valid: true, 
+  valid: true,
+  // Following are for parseFen() only
   piecePlacement: [
     {
       position: string,
@@ -58,14 +66,18 @@ A valid result will be an object consisting of keys with names based on the FEN 
 
 ```
 ### Invalid result
+Both `validateFen()` and `parseFen()` return the same result:
 ```
 {
   fen: string,
   valid: false,
-  error: {
-    message: string,
-    position: number
-  }
+  errors: [
+    {
+      message: string,
+      position: number
+    },
+    ...
+  ]
 }
 ```
 ## References
