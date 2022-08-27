@@ -7,11 +7,7 @@ import {
 import { ParseError } from './ParseError.js'
 
 export const createTokens = (fenstr = ''): Token[] => {
-  if (typeof fenstr !== 'string' || !fenstr.length) {
-    throw new ParseError(`FEN string must not be empty`, 0)
-  }
   return fenstr.split('').map((char: string, i: number): Token => {
-    // start with alpha because b is duplicated (bishop, black side, b file)
     if (char.match(alphaPattern)) {
       return createAlphaToken(char, i)
     } 

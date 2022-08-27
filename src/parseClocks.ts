@@ -6,8 +6,8 @@ const validate = (tokens: Token[], fieldName: string): Token[] => {
   for (let token of tokens) {
     if (!isDigit(token)) {
       throw new ParseError(
-        `${fieldName}: Expected "0-9", instead found "${token.value}" at ${token.position}`,
-        token.position
+        `${fieldName}: Expected "0-9", instead found "${token.value}" at ${token.index}`,
+        token.index
       )
     }
   }
@@ -20,16 +20,16 @@ export const validateHalfMoveClock = (field: Field): Field => {
   try {
     if (!field.tokens.length) {
       throw new ParseError(
-        `${fullMoveName}: Expected "0-9", instead found "" at ${field.delimeter.position}`,
-        field.delimeter.position
+        `${fullMoveName}: Expected "0-9", instead found "" at ${field.delimeter.index}`,
+        field.delimeter.index
       )
     }
     const tokens: Token[] = validate(field.tokens, halfMoveName)
     const fieldValue = Number(field.value)
     if (fieldValue > 100) {
       throw new ParseError(
-        `${halfMoveName}: Field can't exceed "100". Instead found "${field.value}" at ${tokens[0].position}`,
-        tokens[0].position
+        `${halfMoveName}: Field can't exceed "100". Instead found "${field.value}" at ${tokens[0].index}`,
+        tokens[0].index
       )
     }
   } catch (e) {
@@ -53,15 +53,15 @@ export const validateFullMoveNumber = (field: Field): Field => {
   try {
     if (!field.tokens.length) {
       throw new ParseError(
-        `${fullMoveName}: Expected "1-9", instead found "" at ${field.delimeter.position}`,
-        field.delimeter.position
+        `${fullMoveName}: Expected "1-9", instead found "" at ${field.delimeter.index}`,
+        field.delimeter.index
       )
     }
 
     if (field.tokens[0].value === '0') {
       throw new ParseError(
-        `${fullMoveName}: Expected "1-9", instead found "0" at ${field.tokens[0].position}`,
-        field.tokens[0].position
+        `${fullMoveName}: Expected "1-9", instead found "0" at ${field.tokens[0].index}`,
+        field.tokens[0].index
         )
     }
     validate(field.tokens, fullMoveName)

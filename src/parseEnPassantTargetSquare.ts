@@ -8,8 +8,8 @@ export const validateEnPassantTargetSquare = (field: Field ): Field => {
   try {
     if (!field.tokens.length) {
       throw new ParseError(
-        `${fieldName}: Expected "[a-h]", instead found "" at ${field.delimeter.position}`,
-        field.delimeter.position
+        `${fieldName}: Expected "[a-h]", instead found "" at ${field.delimeter.index}`,
+        field.delimeter.index
       )
     }
 
@@ -19,30 +19,30 @@ export const validateEnPassantTargetSquare = (field: Field ): Field => {
       }
       else {
         throw new ParseError(
-          `${fieldName}: Expected "-", instead found "${field.value}" at ${field.tokens[0].position}`,
-          field.tokens[0].position
+          `${fieldName}: Expected "-", instead found "${field.value}" at ${field.tokens[0].index}`,
+          field.tokens[0].index
         )
       }
     }
   
     if (field.tokens.length !== 2) {
       throw new ParseError(
-        `${fieldName}: Expected 2 characters, instead found ${field.tokens.length}, at ${field.tokens[0].position}`,
-        field.tokens[0].position
+        `${fieldName}: Expected 2 characters, instead found ${field.tokens.length}, at ${field.tokens[0].index}`,
+        field.tokens[0].index
       )
     }
     
     if (!field.tokens[0].value.match(rankPattern)) {
       throw new ParseError(
-        `${fieldName}: Expected "[a-h]", instead found "${field.tokens[0].value}" at ${field.tokens[0].position}`,
-        field.tokens[0].position
+        `${fieldName}: Expected "[a-h]", instead found "${field.tokens[0].value}" at ${field.tokens[0].index}`,
+        field.tokens[0].index
       )
     }
   
     if (!field.tokens[1].value.match(enPassantFilePattern)) {
       throw new ParseError(
-        `${fieldName}: Expected "3|6", instead found "${field.tokens[1].value}" at ${field.tokens[1].position}`,
-        field.tokens[1].position
+        `${fieldName}: Expected "3|6", instead found "${field.tokens[1].value}" at ${field.tokens[1].index}`,
+        field.tokens[1].index
       )
     }
   } catch (e) {

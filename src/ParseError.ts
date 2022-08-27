@@ -1,7 +1,7 @@
 export class ParseError {
   constructor(
     public message: string, 
-    public position: number,
+    public index: number,
   ) {}
 }
 

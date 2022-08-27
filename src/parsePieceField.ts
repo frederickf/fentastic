@@ -32,8 +32,8 @@ const tokensMustExist = (field: Field): void => {
   const tokens: Token[] = field.tokens;
   if (!tokens.length) {
     throw new ParseError(
-      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${field.delimeter.position}}`,
-      field.delimeter.position
+      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${field.delimeter.index}}`,
+      field.delimeter.index
     )
   }
 }
@@ -42,8 +42,8 @@ const mustNotStartWithSlash = (field: Field) => {
   const tokens: Token[] = field.tokens
   if (isSlash(tokens[0])) {
     throw new ParseError(
-      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[0].value}" at ${tokens[0].position}`,
-      tokens[0].position
+      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[0].value}" at ${tokens[0].index}`,
+      tokens[0].index
     )
   }
 }
@@ -53,8 +53,8 @@ const mustNotEndWithSlash = (field: Field): void => {
   const lastIndex = tokens.length - 1
     if (isSlash(tokens[lastIndex])) {
       throw new ParseError(
-        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[lastIndex].value}" at ${tokens[lastIndex].position}`,
-        tokens[lastIndex].position
+        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[lastIndex].value}" at ${tokens[lastIndex].index}`,
+        tokens[lastIndex].index
       )
     }
 }
@@ -62,8 +62,8 @@ const mustNotEndWithSlash = (field: Field): void => {
 const tooManyRanks = (rank: Rank, count: number): void => {
   if (count > 8) {
     throw new ParseError(
-      `${fieldName}: Rank count must not exceed "8", instead found "${count}" at ${rank.delimeter.position}`,
-      rank.delimeter.position
+      `${fieldName}: Rank count must not exceed "8", instead found "${count}" at ${rank.delimeter.index}`,
+      rank.delimeter.index
     )
   }
 }
@@ -71,8 +71,8 @@ const tooManyRanks = (rank: Rank, count: number): void => {
 const rankMustNotBeEmpty = (rank: Rank): void => {
   if (!rank.tokens.length) {
     throw new ParseError(
-      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${rank.delimeter.position}`,
-      rank.delimeter.position
+      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${rank.delimeter.index}`,
+      rank.delimeter.index
     )
   }
 }
@@ -85,22 +85,22 @@ const validateTokens = (rank: Rank): void => {
       let currentTokenValue: number = Number(currentToken.value)
       if (currentTokenValue < 1 || currentTokenValue > 8) {
         throw new ParseError(
-          `${fieldName}: Numbers must be between 1-8, instead found "${currentToken.value}" at ${currentToken.position}`,
-          currentToken.position
+          `${fieldName}: Numbers must be between 1-8, instead found "${currentToken.value}" at ${currentToken.index}`,
+          currentToken.index
         )
       }
     }
     else if (!currentToken.value.match(whitePiecePattern) && !currentToken.value.match(blackPiecePattern)) {
       throw new ParseError(
-        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${currentToken.value}" at ${currentToken.position}`,
-        currentToken.position
+        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${currentToken.value}" at ${currentToken.index}`,
+        currentToken.index
       )
     }
     else {
       if (!isAlpha(currentToken) && !isDigit(currentToken)) {
         throw new ParseError(
-          `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", "1-8", instead found "${currentToken.value}" at ${currentToken.position}`,
-          currentToken.position
+          `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", "1-8", instead found "${currentToken.value}" at ${currentToken.index}`,
+          currentToken.index
         )
       }
     }
@@ -113,8 +113,8 @@ const validateNextDigit = (rank: Rank): void => {
     let nextToken: Token = rank.tokens[i + 1]
     if (isDigit(currentToken) && nextToken && isDigit(nextToken)) {
       throw new ParseError(
-        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${nextToken.value}" at ${nextToken.position}.`,
-        nextToken.position
+        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${nextToken.value}" at ${nextToken.index}.`,
+        nextToken.index
       )
     }
   }
@@ -132,14 +132,14 @@ const validateFileCount = (rank: Rank): void => {
     }
     if (fileCount > 8) {
       throw new ParseError(
-        `${fieldName}: File count must not exceed "8", instead found "${fileCount}" at ${token.position}`,
-        token.position
+        `${fieldName}: File count must not exceed "8", instead found "${fileCount}" at ${token.index}`,
+        token.index
       )
     }
     if (i === rank.tokens.length - 1 && fileCount !== 8 ) {
       throw new ParseError(
-        `${fieldName}: Expected file count of "8", instead found "${fileCount}" at ${token.position}`,
-        token.position
+        `${fieldName}: Expected file count of "8", instead found "${fileCount}" at ${token.index}`,
+        token.index
       )
     }
   }
@@ -148,8 +148,8 @@ const validateFileCount = (rank: Rank): void => {
 const validateRankCount = (ranks: Rank[]): void => {
   if (ranks.length !== 8) {
     throw new ParseError(
-      `${fieldName}: Expected rank count of "8", instead found "${ranks.length}" at ${ranks[ranks.length -1].delimeter.position}.`,
-      ranks[ranks.length -1].delimeter.position
+      `${fieldName}: Expected rank count of "8", instead found "${ranks.length}" at ${ranks[ranks.length -1].delimeter.index}.`,
+      ranks[ranks.length -1].delimeter.index
     )
   }
 }

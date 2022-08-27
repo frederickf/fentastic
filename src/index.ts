@@ -6,7 +6,7 @@ import { parseCastlingAvailability, validateCastlingAvailability, type CastlingA
 import { parseEnPassantTargetSquare, validateEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
 import { parseHalfMoveClock, validateHalfMoveClock, parseFullMoveNumber, validateFullMoveNumber } from './parseClocks.js'
 import { ParseError, ParseErrors } from './ParseError.js'
-import { correctWhiteSpace } from './correctWhiteSpace.js'
+import { validateInputFen, InputError } from './validateInputFen.js'
 
 export { type Piece, type CastlingAvailability, ParseError }
 
@@ -27,9 +27,9 @@ export type ValidFen = {
 }
 
 export type InvalidFen = {
-  fen: string;
+  fen: any;
   valid: false;
-  errors: ParseError[];
+  errors: (ParseError | InputError)[];
 }
 
 const validateFields = (fields: Field[]): Field[] => {
@@ -51,8 +51,10 @@ const errors = fields
   return fields
 }
 
-export const validateFen = (fen: string): ValidFen | InvalidFen => {
+export const validateFen = (inputFen: string): ValidFen | InvalidFen => {
+  let fen: string
   try {
+    fen = validateInputFen(inputFen)
     let tokens = createTokens(fen)
     let fields = createFields(tokens)
 
@@ -62,17 +64,19 @@ export const validateFen = (fen: string): ValidFen | InvalidFen => {
   }
   catch(e) {
     if (e instanceof ParseError) {
-      return { fen, valid: false, errors: [e] }
+      return { fen: inputFen, valid: false, errors: [e] }
     }
     else if (e instanceof ParseErrors) {
-      return { fen, valid: false, errors: e.errors}
+      return { fen: inputFen, valid: false, errors: e.errors}
     }
     throw e
   }
 }
 
-export const parseFen = (fen: string): ParsedFen | InvalidFen => {
+export const parseFen = (inputFen: string): ParsedFen | InvalidFen => {
+  let fen: string
   try {
+    fen = validateInputFen(inputFen)
     let tokens = createTokens(fen)
     let fields = createFields(tokens)
 
@@ -90,11 +94,11 @@ export const parseFen = (fen: string): ParsedFen | InvalidFen => {
     }
   }
   catch(e) {
-    if (e instanceof ParseError) {
-      return { fen, valid: false, errors: [e] }
+    if (e instanceof ParseError || e instanceof InputError) {
+      return { fen: inputFen, valid: false, errors: [e] }
     }
     else if (e instanceof ParseErrors) {
-      return { fen, valid: false, errors: e.errors}
+      return { fen: inputFen, valid: false, errors: e.errors}
     }
     throw e
   }

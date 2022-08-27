@@ -11,8 +11,8 @@ export const createFields = (tokens: Token[]): Field[] => {
     // I can't think of a better position for this error
     const last: Token = tokens[tokens.length - 1]
     throw new ParseError(
-      `Invalid field count. Expected "6" fields, found ${fields.length} at ${last.position}.`,
-      last.position
+      `Invalid field count. Expected "6" fields, found ${fields.length} at ${last.index}.`,
+      last.index
     )
   }
 
