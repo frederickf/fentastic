@@ -1,5 +1,5 @@
-# fenjs
-JavaScript library for parsing Forsyth-Edwards Notiation (FEN)
+# deFENsible
+Protection from malformed chess FEN strings
 
 ## Installation
 
@@ -7,7 +7,7 @@ JavaScript library for parsing Forsyth-Edwards Notiation (FEN)
 npm install fenjs
 ```
 
-## About fenjs
+## About deFENce
 
 There are other FEN parsers and validators, and it's not really that difficult to write one. Split on white space, split the piece placement field on "/", then apply few regexs to each field and you're done. While this is a perfectly valid approach, it is missing something: detailed error messages that identify why the FEN is invalid, including the expected characters, the characters found to be invalid and the location in the string where the error was found. fenjs provides those error messages. 
 
@@ -29,7 +29,7 @@ if (result.valid) {
 }
 else {
   // There is a problem with FEN
-  // See the Invalid result section below to learn about the keys on a valid result 
+  // See the Invalid result section below to learn about the keys on an invalid result 
 }
 ```
 

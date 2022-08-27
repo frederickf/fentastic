@@ -1,11 +1,12 @@
 import { createTokens } from './createTokens.js'
-import { createFields, Field } from './createFields.js'
+import { createFields, type Field } from './createFields.js'
 import { parsePieceField, validatePieceField, type Piece } from './parsePieceField.js'
 import { parseActiveColor, validateActiveColor } from './parseActiveColor.js'
 import { parseCastlingAvailability, validateCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
 import { parseEnPassantTargetSquare, validateEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
 import { parseHalfMoveClock, validateHalfMoveClock, parseFullMoveNumber, validateFullMoveNumber } from './parseClocks.js'
 import { ParseError, ParseErrors } from './ParseError.js'
+import { correctWhiteSpace } from './correctWhiteSpace.js'
 
 export { type Piece, type CastlingAvailability, ParseError }
 
@@ -38,14 +39,11 @@ const validateFields = (fields: Field[]): Field[] => {
   validateEnPassantTargetSquare(fields[3])
   validateHalfMoveClock(fields[4])
   validateFullMoveNumber(fields[5])
-  
-  const errors: ParseError[] = []
-  for (let field of fields) {
-    if (field.error) {
-      errors.push(field.error)
-    }
-  }
 
+const errors = fields
+  .filter((f): f is Required<Field> => f.error instanceof ParseError)
+  .map((f) => f.error)
+  
   if (errors.length) {
     throw new ParseErrors(errors)
   }
