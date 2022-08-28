@@ -7,6 +7,7 @@ import { parseEnPassantTargetSquare, validateEnPassantTargetSquare } from './par
 import { parseHalfMoveClock, validateHalfMoveClock, parseFullMoveNumber, validateFullMoveNumber } from './parseClocks.js'
 import { ParseError, ParseErrors } from './ParseError.js'
 import { validateInputFen, InputError } from './validateInputFen.js'
+import { AnyAaaaRecord } from 'dns'
 
 export { type Piece, type CastlingAvailability, ParseError }
 
@@ -51,6 +52,16 @@ const errors = fields
   return fields
 }
 
+const hanldeErrors = (e: unknown, inputFen: any): InvalidFen => {
+  if (e instanceof ParseError || e instanceof InputError) {
+    return { fen: inputFen, valid: false, errors: [e] }
+  }
+  else if (e instanceof ParseErrors) {
+    return { fen: inputFen, valid: false, errors: e.errors}
+  }
+  throw e
+}
+
 export const validateFen = (inputFen: string): ValidFen | InvalidFen => {
   let fen: string
   try {
@@ -63,13 +74,7 @@ export const validateFen = (inputFen: string): ValidFen | InvalidFen => {
     return { fen, valid: true }
   }
   catch(e) {
-    if (e instanceof ParseError) {
-      return { fen: inputFen, valid: false, errors: [e] }
-    }
-    else if (e instanceof ParseErrors) {
-      return { fen: inputFen, valid: false, errors: e.errors}
-    }
-    throw e
+    return hanldeErrors(e, inputFen)
   }
 }
 
@@ -94,13 +99,7 @@ export const parseFen = (inputFen: string): ParsedFen | InvalidFen => {
     }
   }
   catch(e) {
-    if (e instanceof ParseError || e instanceof InputError) {
-      return { fen: inputFen, valid: false, errors: [e] }
-    }
-    else if (e instanceof ParseErrors) {
-      return { fen: inputFen, valid: false, errors: e.errors}
-    }
-    throw e
+    return hanldeErrors(e, inputFen)
   }
 }
 
