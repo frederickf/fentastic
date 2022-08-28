@@ -7,7 +7,7 @@ import { parseEnPassantTargetSquare, validateEnPassantTargetSquare } from './par
 import { parseHalfMoveClock, validateHalfMoveClock, parseFullMoveNumber, validateFullMoveNumber } from './parseClocks.js'
 import { ParseError, ParseErrors } from './ParseError.js'
 import { validateInputFen, InputError } from './validateInputFen.js'
-import { AnyAaaaRecord } from 'dns'
+import { correctWhiteSpace } from './correctWhiteSpace.js'
 
 export { type Piece, type CastlingAvailability, ParseError }
 
@@ -31,6 +31,10 @@ export type InvalidFen = {
   fen: any;
   valid: false;
   errors: (ParseError | InputError)[];
+}
+
+export type Options = {
+  correctWhiteSpace: boolean
 }
 
 const validateFields = (fields: Field[]): Field[] => {
@@ -78,13 +82,21 @@ export const validateFen = (inputFen: string): ValidFen | InvalidFen => {
   }
 }
 
-export const parseFen = (inputFen: string): ParsedFen | InvalidFen => {
+const defaultOptions: Options = {
+  correctWhiteSpace: false
+}
+
+export const parseFen = (inputFen: string, options: Options = defaultOptions): ParsedFen | InvalidFen => {
   let fen: string
   try {
     fen = validateInputFen(inputFen)
     let tokens = createTokens(fen)
-    let fields = createFields(tokens)
 
+    if (options.correctWhiteSpace) {
+      tokens = correctWhiteSpace(tokens)
+    }
+
+    let fields = createFields(tokens)
     fields = validateFields(fields)
 
     return {
