@@ -22,7 +22,7 @@
     }
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "prebuild": "rimraf dist/",
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --outDir dist/esm",
