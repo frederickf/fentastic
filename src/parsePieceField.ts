@@ -32,8 +32,8 @@ const tokensMustExist = (field: Field): void => {
   const tokens: Token[] = field.tokens;
   if (!tokens.length) {
     throw new ParseError(
-      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${field.delimeter.index}}`,
-      field.delimeter.index
+      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${field.delimiter.index}}`,
+      field.delimiter.index
     )
   }
 }
@@ -59,20 +59,11 @@ const mustNotEndWithSlash = (field: Field): void => {
     }
 }
 
-const tooManyRanks = (rank: Rank, count: number): void => {
-  if (count > 8) {
-    throw new ParseError(
-      `${fieldName}: Rank count must not exceed "8", instead found "${count}" at ${rank.delimeter.index}`,
-      rank.delimeter.index
-    )
-  }
-}
-
 const rankMustNotBeEmpty = (rank: Rank): void => {
   if (!rank.tokens.length) {
     throw new ParseError(
-      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${rank.delimeter.index}`,
-      rank.delimeter.index
+      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${rank.delimiter.index}`,
+      rank.delimiter.index
     )
   }
 }
@@ -148,24 +139,25 @@ const validateFileCount = (rank: Rank): void => {
 const validateRankCount = (ranks: Rank[]): void => {
   if (ranks.length !== 8) {
     throw new ParseError(
-      `${fieldName}: Expected rank count of "8", instead found "${ranks.length}" at ${ranks[ranks.length -1].delimeter.index}.`,
-      ranks[ranks.length -1].delimeter.index
+      `${fieldName}: Expected rank count of "8", instead found "${ranks.length}" at ${ranks[ranks.length -1].delimiter.index}.`,
+      ranks[ranks.length -1].delimiter.index
     )
   }
 }
 
 export const validatePieceField = (field: Field): Field => {
   try {
+    // TODO: I don't think it is possible to get this far without tokens
+    // now that there is an upstream test for empty input string
     tokensMustExist(field)
     mustNotStartWithSlash(field)
     mustNotEndWithSlash(field)
     const ranks: Rank[] = createTokenGroups(isSlash, field.tokens)
-    for (let i = 0; i < ranks.length; i++) {
-      tooManyRanks(ranks[i], i + 1)
-      rankMustNotBeEmpty(ranks[i])
-      validateTokens(ranks[i])
-      validateNextDigit(ranks[i])
-      validateFileCount(ranks[i])
+    for (let rank of ranks) {
+      rankMustNotBeEmpty(rank)
+      validateTokens(rank)
+      validateNextDigit(rank)
+      validateFileCount(rank)
     }
     validateRankCount(ranks)
   }

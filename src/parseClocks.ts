@@ -20,8 +20,8 @@ export const validateHalfMoveClock = (field: Field): Field => {
   try {
     if (!field.tokens.length) {
       throw new ParseError(
-        `${fullMoveName}: Expected "0-9", instead found "" at ${field.delimeter.index}`,
-        field.delimeter.index
+        `${fullMoveName}: Expected "0-9", instead found "" at ${field.delimiter.index}`,
+        field.delimiter.index
       )
     }
     const tokens: Token[] = validate(field.tokens, halfMoveName)
@@ -53,8 +53,8 @@ export const validateFullMoveNumber = (field: Field): Field => {
   try {
     if (!field.tokens.length) {
       throw new ParseError(
-        `${fullMoveName}: Expected "1-9", instead found "" at ${field.delimeter.index}`,
-        field.delimeter.index
+        `${fullMoveName}: Expected "1-9", instead found "" at ${field.delimiter.index}`,
+        field.delimiter.index
       )
     }
 

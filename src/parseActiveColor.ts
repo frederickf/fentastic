@@ -6,20 +6,20 @@ export const validateActiveColor = (field: Field): Field => {
   try {
     if (!field.tokens.length) {
       throw new ParseError(
-        `${fieldName}: Expected "w|b", instead found "" at ${field.delimeter.index}`,
-        field.delimeter.index
+        `${fieldName}: Expected "w|b", instead found "" at ${field.delimiter.index}`,
+        field.delimiter.index
       )
     }
     if (field.tokens.length !== 1) {
       throw new ParseError(
-        `${fieldName}: Expected "w|b" character, instead found ${field.value} at ${field.tokens[0].index}`,
+        `${fieldName}: Expected "w|b" character, instead found "${field.value}" at ${field.tokens[0].index}`,
         field.tokens[0].index
       )
     }
   
     if (field.value !== 'w' && field.value !== 'b') {
       throw new ParseError(
-        `${fieldName}: Expected "w|b", instead found ${field.value} at ${field.tokens[0].index}`,
+        `${fieldName}: Expected "w|b", instead found "${field.value}" at ${field.tokens[0].index}`,
         field.tokens[0].index
       )
     }

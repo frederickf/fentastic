@@ -1,0 +1,300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Validate Active color: it should be invalid because there are too many characters 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 48,
+      "message": "Active color: Expected \\"w|b\\" character, instead found \\"wb\\" at 48",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR wb KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Active color: it should be invalid with any character besides "w" or "b 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 48,
+      "message": "Active color: Expected \\"w|b\\", instead found \\"p\\" at 48",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR p KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Castling availability: it should be invalid due to incorrect character 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 53,
+      "message": "Castling availability: Expected \\"q\\", instead found \\"p\\" at 53",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkp c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Castling availability: it should be invalid due to incorrect order 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 51,
+      "message": "Castling availability: Expected \\"k|q\\", instead found \\"K\\" at 51",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w QKkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate En passant target square: it should be invalid with any rank besides 3 or 6 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 54,
+      "message": "En passant target square: Expected \\"3|6\\", instead found \\"2\\" at 54",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c2 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate En passant target square: it should be invalid with too few characters 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 53,
+      "message": "En passant target square: Expected \\"-\\", instead found \\"c\\" at 53",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate En passant target square: it should be invalid with too many characters 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 53,
+      "message": "En passant target square: Expected 2 characters, instead found 4, at 53",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c3c3 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Full move number: it should be invalid as zero 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 58,
+      "message": "Fullmove number: Expected \\"1-9\\", instead found \\"0\\" at 58",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c3 1 0",
+  "valid": false,
+}
+`;
+
+exports[`Validate Full move number: it should be invalid with a non number character 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 58,
+      "message": "Fullmove number: Expected \\"0-9\\", instead found \\"p\\" at 58",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c3 1 p",
+  "valid": false,
+}
+`;
+
+exports[`Validate Half move clock: it should be a number 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 55,
+      "message": "Halfmove clock: Expected \\"0-9\\", instead found \\"p\\" at 55",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq - p 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Half move clock: it should be invalid when greater than 100 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 55,
+      "message": "Halfmove clock: Field can't exceed \\"100\\". Instead found \\"101\\" at 55",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq - 101 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: 0 is invalid. Digits must be between 1 - 8 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 18,
+      "message": "Piece placement data: Numbers must be between 1-8, instead found \\"0\\" at 18",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/0/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: 9 is invalid. Digits must be between 1 - 8 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 18,
+      "message": "Piece placement data: Numbers must be between 1-8, instead found \\"9\\" at 18",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/9/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: The character "w" is not valid 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 0,
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\", instead found \\"w\\" at 0",
+    },
+  ],
+  "fen": "wnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: must not end with slash 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 47,
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"/\\" at 47",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR/ w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: must not have empty rank 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 8,
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"\\" at 8",
+    },
+  ],
+  "fen": "rnbqkbnr//8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: must not have too many ranks 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 47,
+      "message": "Piece placement data: Expected rank count of \\"8\\", instead found \\"9\\" at 47.",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: must not start with slash 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 0,
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"/\\" at 0",
+    },
+  ],
+  "fen": "/rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: should error on invalid characters 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 0,
+      "message": "Invalid character \\";\\" at position 0",
+    },
+  ],
+  "fen": ";nbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: should error on two subsequent numbers 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 12,
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\", instead found \\"1\\" at 12.",
+    },
+  ],
+  "fen": "rnbqkbnr/pp11pppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: should error when file count is too high 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 8,
+      "message": "Piece placement data: File count must not exceed \\"8\\", instead found \\"9\\" at 8",
+    },
+  ],
+  "fen": "rnbqkbnrQ/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: should error when file count is too low 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 6,
+      "message": "Piece placement data: Expected file count of \\"8\\", instead found \\"7\\" at 6",
+    },
+  ],
+  "fen": "rnbqkbn/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate Piece placement data: should error when rank count is too low 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 29,
+      "message": "Piece placement data: Expected rank count of \\"8\\", instead found \\"7\\" at 29.",
+    },
+  ],
+  "fen": "pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;

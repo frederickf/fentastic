@@ -15,8 +15,8 @@ export const validateCastlingAvailability = (field: Field): Field => {
   try {
     if (!field.tokens.length) {
       throw new ParseError(
-        `${fieldName}: Expected "-|Q|K|q|k, instead found "" at ${field.delimeter.index}`,
-        field.delimeter.index
+        `${fieldName}: Expected "-|Q|K|q|k", instead found "" at ${field.delimiter.index}`,
+        field.delimiter.index
       )
     }
 

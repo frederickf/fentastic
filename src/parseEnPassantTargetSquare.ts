@@ -8,8 +8,8 @@ export const validateEnPassantTargetSquare = (field: Field ): Field => {
   try {
     if (!field.tokens.length) {
       throw new ParseError(
-        `${fieldName}: Expected "[a-h]", instead found "" at ${field.delimeter.index}`,
-        field.delimeter.index
+        `${fieldName}: Expected "a-h", instead found "" at ${field.delimiter.index}`,
+        field.delimiter.index
       )
     }
 
@@ -34,7 +34,7 @@ export const validateEnPassantTargetSquare = (field: Field ): Field => {
     
     if (!field.tokens[0].value.match(rankPattern)) {
       throw new ParseError(
-        `${fieldName}: Expected "[a-h]", instead found "${field.tokens[0].value}" at ${field.tokens[0].index}`,
+        `${fieldName}: Expected "a-h", instead found "${field.tokens[0].value}" at ${field.tokens[0].index}`,
         field.tokens[0].index
       )
     }
