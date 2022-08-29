@@ -9,7 +9,7 @@ import { ParseError, ParseErrors } from './ParseError.js'
 import { validateInputFen, InputError } from './validateInputFen.js'
 import { correctWhiteSpace } from './correctWhiteSpace.js'
 
-export { type Piece, type CastlingAvailability, ParseError }
+export { type Piece, type CastlingAvailability, ParseError, InputError }
 
 export type ParsedFen = {
   fen: string;
