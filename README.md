@@ -1,24 +1,24 @@
-# deFENsible
-Protection from malformed chess FEN strings
+# fentastic
+Fentastic is scientifically proven to improve your mental health, enhance your relationships, increase your range of motion, foster mental well being, and validate and parse Forsyth–Edwards Notation (FEN) strings used to describe a particular board position of a chess game.
 
 ## Installation
 
 ```
-npm install fenjs
+npm install fentastic
 ```
 
-## About deFENce
 
-There are other FEN parsers and validators, and it's not really that difficult to write one. Split on white space, split the piece placement field on "/", then apply few regexs to each field and you're done. While this is a perfectly valid approach, it is missing something: detailed error messages that identify why the FEN is invalid, including the expected characters, the characters found to be invalid and the location in the string where the error was found. fenjs provides those error messages. 
+## About
 
+Fentastic's claim to fame is excessively detailed error messages that identify why the FEN is invalid, including the field in which the error occurred, the expected characters, the characters found to be invalid and the location in the string where the error was found. Fentastic can also be used to create a JavaScript representation of FEN string, if that's what you're into.
 
 ## Usage
 
-Use the `validateFen()` or `parseFen()` to evaluate a FEN string. Both will validate the FEN based on the FEN standard and return an object with a boolean valid key. `parseFen() will also return structured data describing the FEN (see Valid results section below)
+Use the `validateFen()` or `parseFen()` functions to evaluate a FEN string. Both will validate the FEN string based on the FEN standard and return an object with a boolean valid key and errors if the FEN string is invalid. `parseFen()` will also return structured data describing a valid FEN string (see Valid results section below).
 
 ```
-// require is also supported
-import { validateFen, parseFen } from 'fenjs'
+// CommonJS is also supported
+import { validateFen, parseFen } from 'fentastic'
 
 // Use parseFen(str) or validateFen(str)
 const result = parseFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
@@ -32,12 +32,26 @@ else {
   // See the Invalid result section below to learn about the keys on an invalid result 
 }
 ```
+### Options
+`parseFen()` takes an optional options object as it's second argument. Currently only one option is supported:
 
-### Valid result
-| Header | Header |
+#### correctWhiteSpace
+Prior to validation and parsing, white space will be trimmed from the FEN string, and whitespace separating fields will be collapsed to a single space
+```
+parseFen('  rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w   KQkq - 0 1 ', {
+  parseWhiteSpace: true
+})
+```
+In the example above, the FEN string would be considered valid and correctly parsed. Note that the input string will be returned unchanged. You will need to rely on the parsed results. 
+
+## Fentastic results
+By this point you should already be seeing fentastic results, including increased confidence, lower cholesterol and better skin.
+
+### Valid
+| Function | Description |
 | - | - |
-| validateFen | A valid result will be an object consisting of the input fen and `valid: true`
-| parseFen | A valid result will be an object consisting of the input fen, `valid: true` and keys with names based on the FEN fields defined in PGN_standard Section "16.1: FEN |
+| `validateFen()` | A valid result will be an object consisting of the input fen and `valid: true`
+| `parseFen()` | A valid result will be an object consisting of the input fen, `valid: true` and keys with names based on the FEN fields defined in PGN_standard Section "16.1: FEN |
 
 ```
 {
@@ -65,7 +79,7 @@ else {
 }
 
 ```
-### Invalid result
+### Invalid
 Both `validateFen()` and `parseFen()` return the same result:
 ```
 {
@@ -74,7 +88,7 @@ Both `validateFen()` and `parseFen()` return the same result:
   errors: [
     {
       message: string,
-      position: number
+      index: number
     },
     ...
   ]
