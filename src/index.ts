@@ -14,7 +14,7 @@ export { type Piece, type CastlingAvailability, ParseError, InputError }
 export type ParsedFen = {
   fen: string;
   valid: true;
-  fields: String[];
+  fields: string[];
   piecePlacement: Piece[];
   activeColor: string;
   castlingAvailability: CastlingAvailability | undefined;
