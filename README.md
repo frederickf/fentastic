@@ -7,10 +7,9 @@ Fentastic is scientifically proven to improve your mental health, enhance your r
 npm install fentastic
 ```
 
-
 ## About
 
-Fentastic's claim to fame is excessively detailed error messages that identify why the FEN is invalid, including the field in which the error occurred, the expected characters, the characters found to be invalid and the location in the string where the error was found. Fentastic can also be used to create a JavaScript representation of FEN string, if that's what you're into.
+Fentastic's claim to fame is excessively detailed error messages including the field in which the error occurred, the expected characters, the characters found to be invalid and the location in the string where the error was found. Fentastic can also be used to create a JavaScript representation of FEN string, if that's what you're into.
 
 ## Usage
 

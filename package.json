@@ -1,16 +1,16 @@
 {
-  "name": "fenjs",
+  "name": "fentastic",
   "version": "0.0.1",
-  "description": "JavaScript library for parsing Forsyth-Edwards Notiation (FEN)",
+  "description": "JavaScript library for validating and parsing Forsyth-Edwards Notation (FEN)",
   "author": "Frederick C. Feibel",
   "license": "MIT",
-  "homepage": "https://github.com/frederickf/fenjs#readme",
+  "homepage": "https://github.com/frederickf/fentastic#readme",
   "bugs": {
-    "url": "https://github.com/frederickf/fenjs/issues"
+    "url": "https://github.com/frederickf/fentastic/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frederickf/fenjs.git"
+    "url": "git+https://github.com/frederickf/fentastic.git"
   },
   "type": "module",
   "main": "./dist/cjs/index.js",
