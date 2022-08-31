@@ -58,6 +58,7 @@ By this point you should already be seeing fentastic results, including increase
   fen: string 
   valid: true,
   // Following are for parseFen() only
+  fields: string[],
   piecePlacement: [
     {
       position: string,
@@ -68,14 +69,14 @@ By this point you should already be seeing fentastic results, including increase
   ],
   activeColor: string,
   castlingAvailability: undefined | {
-    whiteKing: boolean,
-    whiteQueen: boolean,
-    blackKing: boolean,
-    blackQueen: boolean
+    whiteKingside: boolean,
+    whiteQueenside: boolean,
+    blackKingside: boolean,
+    blackQueenside: boolean
   },
   enPassantTargetSquare: string | undefined,
-  halfMoveClock: number,
-  fullMoveNumber: number
+  halfmoveClock: number,
+  fullmoveNumber: number
 }
 
 ```

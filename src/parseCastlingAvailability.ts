@@ -3,10 +3,10 @@ import { ParseError } from './ParseError.js';
 import { type Field } from './createFields.js'
 
 export type CastlingAvailability = {
-  whiteKing: boolean;
-  whiteQueen: boolean;
-  blackKing: boolean;
-  blackQueen: boolean;
+  whiteKingside: boolean;
+  whiteQueenside: boolean;
+  blackKingside: boolean;
+  blackQueenside: boolean;
 }
 
 const fieldName = 'Castling availability'
@@ -85,9 +85,9 @@ export const parseCastlingAvailability = (field: Field): CastlingAvailability | 
   }
 
   return { 
-    whiteKing: field.value.includes('K'),
-    whiteQueen: field.value.includes('Q'), 
-    blackKing: field.value.includes('k'),
-    blackQueen: field.value.includes('q')
+    whiteKingside: field.value.includes('K'),
+    whiteQueenside: field.value.includes('Q'), 
+    blackKingside: field.value.includes('k'),
+    blackQueenside: field.value.includes('q')
  }
 }

@@ -14,12 +14,13 @@ export { type Piece, type CastlingAvailability, ParseError, InputError }
 export type ParsedFen = {
   fen: string;
   valid: true;
+  fields: String[];
   piecePlacement: Piece[];
   activeColor: string;
   castlingAvailability: CastlingAvailability | undefined;
   enPassantTargetSquare: string | undefined;
-  halfMoveClock: number;
-  fullMoveNumber: number;
+  halfmoveClock: number;
+  fullmoveNumber: number;
 }
 
 export type ValidFen = {
@@ -56,7 +57,7 @@ const errors = fields
   return fields
 }
 
-const hanldeErrors = (e: unknown, inputFen: any): InvalidFen => {
+const handleErrors = (e: unknown, inputFen: any): InvalidFen => {
   if (e instanceof ParseError || e instanceof InputError) {
     return { fen: inputFen, valid: false, errors: [e] }
   }
@@ -78,7 +79,7 @@ export const validateFen = (inputFen: string): ValidFen | InvalidFen => {
     return { fen, valid: true }
   }
   catch(e) {
-    return hanldeErrors(e, inputFen)
+    return handleErrors(e, inputFen)
   }
 }
 
@@ -102,16 +103,17 @@ export const parseFen = (inputFen: string, options: Options = defaultOptions): P
     return {
       fen,
       valid: true,
+      fields: fields.map((f: Field) => f.value),
       piecePlacement: parsePieceField(fields[0]),
       activeColor: parseActiveColor(fields[1]),
       castlingAvailability: parseCastlingAvailability(fields[2]),
       enPassantTargetSquare: parseEnPassantTargetSquare(fields[3]),
-      halfMoveClock: parseHalfMoveClock(fields[4]),
-      fullMoveNumber: parseFullMoveNumber(fields[5])
+      halfmoveClock: parseHalfMoveClock(fields[4]),
+      fullmoveNumber: parseFullMoveNumber(fields[5])
     }
   }
   catch(e) {
-    return hanldeErrors(e, inputFen)
+    return handleErrors(e, inputFen)
   }
 }
 
