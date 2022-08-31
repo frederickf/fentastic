@@ -1,5 +1,35 @@
 import { validateFen } from '../src/index.js'
 
+describe ('Validate input', () => {
+  it('should error when FEN is not a string', () => {
+    // @ts-ignore
+    const result = validateFen(1)
+    expect(result.valid).toEqual(false)
+  })
+
+  it('error when FEN is an empty string', () => {
+    const result = validateFen('')
+    expect(result.valid).toEqual(false)
+  })
+})
+
+describe('Validate whitespace', () => {
+  it('FEN must not start with an empty string', () => {
+    const result = validateFen(' rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
+    expect(result.valid).toEqual(false)
+  })
+
+  it('FEN must not end with an empty string', () => {
+    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2 ')
+    expect(result.valid).toEqual(false)
+  })
+
+  it('FEN must not have repeated empty strings', () => {
+    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR  w KQkq c6 0 2 ')
+    expect(result.valid).toEqual(false)
+  })
+})
+
 describe('Validate Piece placement data:', () => {
   it('should be valid', () => {
     const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
