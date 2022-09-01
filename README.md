@@ -6,6 +6,7 @@ Fentastic is scientifically proven to improve your mental health, enhance your r
 ```
 npm install fentastic
 ```
+Pre 1.x.x versions of fentastic have been shown to cause headaches, insomnia, and breaking changes. Use `--save-exact` minimize side effects.
 
 ## About
 
@@ -35,7 +36,7 @@ else {
 `parseFen()` takes an optional options object as it's second argument. Currently only one option is supported:
 
 #### correctWhiteSpace
-Prior to validation and parsing, white space will be trimmed from the FEN string, and whitespace separating fields will be collapsed to a single space
+Prior to validation and parsing, white space will be trimmed from the FEN string, and whitespace separating fields will be collapsed to a single space.
 ```
 parseFen('  rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w   KQkq - 0 1 ', {
   parseWhiteSpace: true

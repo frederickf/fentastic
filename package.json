@@ -2,8 +2,9 @@
   "name": "fentastic",
   "version": "0.0.1",
   "description": "JavaScript library for validating and parsing Forsyth-Edwards Notation (FEN)",
-  "author": "Frederick C. Feibel",
+  "author": "frederickf <ffeibel@gmailc.com>",
   "license": "MIT",
+  "keywords": ["FEN", "chess"],
   "homepage": "https://github.com/frederickf/fentastic#readme",
   "bugs": {
     "url": "https://github.com/frederickf/fentastic/issues"
@@ -21,12 +22,15 @@
       "require": "./dist/cjs/index.js"
     }
   },
+  "files": ["dist/"],
   "scripts": {
     "test": "jest --verbose",
     "prebuild": "rimraf dist/",
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --outDir dist/esm",
-    "build:cjs": "tsc --module CommonJS --outDir dist/cjs && node writeCjsPackage.js"
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs && node writeCjsPackage.js",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags"
   },
   "jest": {
     "preset": "ts-jest/presets/default-esm",
