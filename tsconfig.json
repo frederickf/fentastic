@@ -6,15 +6,31 @@
     "dist"
   ],
   "compilerOptions": {
+    // Type Checking
+    "isolatedModules": true,
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": false, // TODO: Enable and fix all the array access errors
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    // Language and Environment
     "target": "es2016",
     "lib": ["es2016"],
+    // Modules
     "module": "node16",
+    "types": ["node", "jest"],
+    // Interop Constraints
     "esModuleInterop": true, 
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    // Completeness
     "skipLibCheck": true,
-    "types": ["node", "jest"],
+    // Emit
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": false,
+    
   }
 }

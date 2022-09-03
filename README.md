@@ -1,5 +1,5 @@
 # fentastic
-Fentastic is scientifically proven to improve your mental health, enhance your relationships, increase your range of motion, foster mental well being, and validate and parse Forsyth–Edwards Notation (FEN) strings used to describe a particular board position of a chess game.
+Fentastic is scientifically proven to improve your mental health, enhance your relationships, increase your range of motion, foster mental well being, and validate and parse Forsyth–Edwards Notation (FEN) used to describe a particular board position of a chess game.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Pre 1.x.x versions of fentastic have been shown to cause headaches, insomnia, an
 
 ## About
 
-Fentastic's claim to fame is excessively detailed error messages including the field in which the error occurred, the expected characters, the characters found to be invalid and the location in the string where the error was found. Fentastic can also be used to create a JavaScript representation of FEN string, if that's what you're into.
+Fentastic provides excessively detailed error messages including the field in which the error occurred, the expected characters, the characters found to be invalid and the location in the FEN string where the error was found. Fentastic can also be used to create a JavaScript representation of a FEN, if that's what you're into.
 
 ## Usage
 
