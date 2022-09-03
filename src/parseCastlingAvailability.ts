@@ -1,5 +1,5 @@
 import { isDash } from './token.js'
-import { ParseError } from './ParseError.js';
+import { ParseError } from './ParseError.js'
 import { type Field } from './createFields.js'
 
 export type CastlingAvailability = {
@@ -35,12 +35,12 @@ export const validateCastlingAvailability = (field: Field): Field => {
   
     for (let i = 0; i < field.tokens.length; i++) {
       let nextValid: string[] = []
-      let nextError: string = ''
+      let nextError = ''
       switch(field.tokens[i].value) {
         case 'K':
           nextValid = ['Q', 'k', 'q']
           nextError = 'Q|k|q'
-          break;
+          break
         case 'Q':
           nextValid = ['k', 'q']
           nextError = 'k|q'
@@ -59,7 +59,7 @@ export const validateCastlingAvailability = (field: Field): Field => {
             field.tokens[i].index
           )
       }
-      let next = field.tokens[i + 1]
+      const next = field.tokens[i + 1]
       if (next && !nextValid.includes(next.value)) {
         throw new ParseError(
           `${fieldName}: Expected "${nextError}", instead found "${next.value}" at ${next.index}`,
@@ -67,7 +67,8 @@ export const validateCastlingAvailability = (field: Field): Field => {
         )
       }
     }
-  } catch (e) {
+  }
+  catch (e) {
     if (e instanceof ParseError) {
       field.error = e
     }
@@ -89,5 +90,5 @@ export const parseCastlingAvailability = (field: Field): CastlingAvailability | 
     whiteQueenside: field.value.includes('Q'), 
     blackKingside: field.value.includes('k'),
     blackQueenside: field.value.includes('q')
- }
+  }
 }

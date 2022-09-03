@@ -5,12 +5,12 @@ export class InputError {
   ) {}
 }
 
-export const validateInputFen = (fen: any): string => {
+export const validateInputFen = (fen: unknown): string => {
   if (typeof fen !== 'string') {
-    throw new InputError(`FEN input must be of type 'string'`, 1)
+    throw new InputError('FEN input must be of type \'string\'', 1)
   }
   if (!fen.length) {
-    throw new InputError(`FEN input string must not be empty`, 1)
+    throw new InputError('FEN input string must not be empty', 1)
   }
   return fen
 }

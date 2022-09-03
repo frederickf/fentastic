@@ -1,4 +1,4 @@
-import { ParseError } from './ParseError.js';
+import { ParseError } from './ParseError.js'
 import { type Token } from './token.js'
 import { isOfType } from './token.js'
 
@@ -11,10 +11,10 @@ export type TokenGroup = {
 
 const split = (isDelimiter: isOfType, tokens: Token[]): Token[][]=> {
   const result: Token[][] = [[]]
-  for (let token of tokens) {
+  for (const token of tokens) {
     isDelimiter(token) ? result.push([token]) : result.at(-1)?.push(token)
   }
-  return result;
+  return result
 }
 
 export const createTokenGroups = (isDelimiter: isOfType, tokens: Token[]): TokenGroup[]=> (

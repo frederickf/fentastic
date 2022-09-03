@@ -23,7 +23,8 @@ export const validateActiveColor = (field: Field): Field => {
         field.tokens[0].index
       )
     }
-  } catch (e) {
+  }
+  catch (e) {
     if (e instanceof ParseError) {
       field.error = e
     } 
@@ -32,7 +33,7 @@ export const validateActiveColor = (field: Field): Field => {
     }
   }
 
-  return field;
+  return field
 }
 
 // TODO: This seems unnecessary. Can't I just use the original w or b?

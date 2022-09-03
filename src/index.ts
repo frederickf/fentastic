@@ -29,7 +29,7 @@ export type ValidFen = {
 }
 
 export type InvalidFen = {
-  fen: any;
+  fen: unknown;
   valid: false;
   errors: (ParseError | InputError)[];
 }
@@ -46,9 +46,9 @@ const validateFields = (fields: Field[]): Field[] => {
   validateHalfMoveClock(fields[4])
   validateFullMoveNumber(fields[5])
 
-const errors = fields
-  .filter((f): f is Required<Field> => f.error instanceof ParseError)
-  .map((f) => f.error)
+  const errors = fields
+    .filter((f): f is Required<Field> => f.error instanceof ParseError)
+    .map((f) => f.error)
   
   if (errors.length) {
     throw new ParseErrors(errors)
@@ -57,7 +57,7 @@ const errors = fields
   return fields
 }
 
-const handleErrors = (e: unknown, inputFen: any): InvalidFen => {
+const handleErrors = (e: unknown, inputFen: unknown): InvalidFen => {
   if (e instanceof ParseError || e instanceof InputError) {
     return { fen: inputFen, valid: false, errors: [e] }
   }
@@ -71,9 +71,9 @@ export const validateFen = (inputFen: string): ValidFen | InvalidFen => {
   let fen: string
   try {
     fen = validateInputFen(inputFen)
-    let tokens = createTokens(fen)
+    const tokens = createTokens(fen)
     validateWhiteSpace(tokens)
-    let fields = createFields(tokens)
+    const fields = createFields(tokens)
 
     validateFields(fields)
 

@@ -3,7 +3,7 @@ import { ParseError } from './ParseError.js'
 import { Field } from './createFields.js'
 
 const validate = (tokens: Token[], fieldName: string): Token[] => {
-  for (let token of tokens) {
+  for (const token of tokens) {
     if (!isDigit(token)) {
       throw new ParseError(
         `${fieldName}: Expected "0-9", instead found "${token.value}" at ${token.index}`,
@@ -32,7 +32,8 @@ export const validateHalfMoveClock = (field: Field): Field => {
         tokens[0].index
       )
     }
-  } catch (e) {
+  }
+  catch (e) {
     if (e instanceof ParseError) {
       field.error = e
     }
@@ -62,10 +63,11 @@ export const validateFullMoveNumber = (field: Field): Field => {
       throw new ParseError(
         `${fullMoveName}: Expected "1-9", instead found "0" at ${field.tokens[0].index}`,
         field.tokens[0].index
-        )
+      )
     }
     validate(field.tokens, fullMoveName)
-  } catch (e) {
+  }
+  catch (e) {
     if (e instanceof ParseError) {
       field.error = e
     }

@@ -45,7 +45,8 @@ export const validateEnPassantTargetSquare = (field: Field ): Field => {
         field.tokens[1].index
       )
     }
-  } catch (e) {
+  }
+  catch (e) {
     if (e instanceof ParseError) {
       field.error = e
     }

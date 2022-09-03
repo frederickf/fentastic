@@ -29,7 +29,7 @@ type Rank = TokenGroup
 const fieldName = 'Piece placement data'
 
 const tokensMustExist = (field: Field): void => {
-  const tokens: Token[] = field.tokens;
+  const tokens: Token[] = field.tokens
   if (!tokens.length) {
     throw new ParseError(
       `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "" at ${field.delimiter.index}}`,
@@ -51,12 +51,12 @@ const mustNotStartWithSlash = (field: Field) => {
 const mustNotEndWithSlash = (field: Field): void => {
   const tokens: Token[] = field.tokens
   const lastIndex = tokens.length - 1
-    if (isSlash(tokens[lastIndex])) {
-      throw new ParseError(
-        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[lastIndex].value}" at ${tokens[lastIndex].index}`,
-        tokens[lastIndex].index
-      )
-    }
+  if (isSlash(tokens[lastIndex])) {
+    throw new ParseError(
+      `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${tokens[lastIndex].value}" at ${tokens[lastIndex].index}`,
+      tokens[lastIndex].index
+    )
+  }
 }
 
 const rankMustNotBeEmpty = (rank: Rank): void => {
@@ -70,10 +70,10 @@ const rankMustNotBeEmpty = (rank: Rank): void => {
 
 const validateTokens = (rank: Rank): void => {
   for (let i = 0; i < rank.tokens.length; i++) {
-    let currentToken: Token = rank.tokens[i]
+    const currentToken: Token = rank.tokens[i]
 
     if (isDigit(currentToken)) {
-      let currentTokenValue: number = Number(currentToken.value)
+      const currentTokenValue = Number(currentToken.value)
       if (currentTokenValue < 1 || currentTokenValue > 8) {
         throw new ParseError(
           `${fieldName}: Numbers must be between 1-8, instead found "${currentToken.value}" at ${currentToken.index}`,
@@ -100,8 +100,8 @@ const validateTokens = (rank: Rank): void => {
 
 const validateNextDigit = (rank: Rank): void => {
   for (let i = 0; i < rank.tokens.length; i++) {
-    let currentToken: Token = rank.tokens[i]
-    let nextToken: Token = rank.tokens[i + 1]
+    const currentToken: Token = rank.tokens[i]
+    const nextToken: Token = rank.tokens[i + 1]
     if (isDigit(currentToken) && nextToken && isDigit(nextToken)) {
       throw new ParseError(
         `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${nextToken.value}" at ${nextToken.index}.`,
@@ -114,7 +114,7 @@ const validateNextDigit = (rank: Rank): void => {
 const validateFileCount = (rank: Rank): void => {
   let fileCount = 0
   for (let i = 0; i < rank.tokens.length; i++) {
-    let token: Token = rank.tokens[i]
+    const token: Token = rank.tokens[i]
     if (isDigit(token)) {
       fileCount = fileCount + Number(token.value)
     } 
@@ -153,7 +153,7 @@ export const validatePieceField = (field: Field): Field => {
     mustNotStartWithSlash(field)
     mustNotEndWithSlash(field)
     const ranks: Rank[] = createTokenGroups(isSlash, field.tokens)
-    for (let rank of ranks) {
+    for (const rank of ranks) {
       rankMustNotBeEmpty(rank)
       validateTokens(rank)
       validateNextDigit(rank)
@@ -175,9 +175,9 @@ export const validatePieceField = (field: Field): Field => {
 const createPieceTokens = (tokens: Token[]): PieceToken[] => {
   const fileLetters: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
   let currentRank = 8
-  let fileIndex = 0;
+  let fileIndex = 0
   const pieceTokens: PieceToken[] = []
-  for (let token of tokens) {
+  for (const token of tokens) {
     if (isSlash(token)) {
       currentRank = currentRank - 1
       fileIndex = 0

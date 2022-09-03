@@ -4,7 +4,10 @@
   "description": "Validate and parse Forsyth-Edwards Notation (FEN) used to describe a chess game board position.",
   "author": "frederickf <ffeibel@gmailc.com>",
   "license": "MIT",
-  "keywords": ["FEN", "chess"],
+  "keywords": [
+    "FEN",
+    "chess"
+  ],
   "homepage": "https://github.com/frederickf/fentastic#readme",
   "bugs": {
     "url": "https://github.com/frederickf/fentastic/issues"
@@ -22,16 +25,20 @@
       "require": "./dist/cjs/index.js"
     }
   },
-  "files": ["dist/"],
+  "files": [
+    "dist/"
+  ],
   "scripts": {
+    "lint": "eslint src/**/*.ts",
     "test": "jest --verbose",
+    "verify": "npm run lint && npm test",
     "prebuild": "rimraf dist/",
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --outDir dist/esm",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs && node writeCjsPackage.js",
-    "preversion": "npm test",
+    "preversion": "npm run verify",
     "postversion": "git push && git push --tags",
-    "prepublishOnly": "npm test && npm run build"
+    "prepublishOnly": "npm run verify && npm run build"
   },
   "jest": {
     "preset": "ts-jest/presets/default-esm",
@@ -41,7 +48,9 @@
         "useESM": true
       }
     },
-    "extensionsToTreatAsEsm": [".ts"],
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
     "moduleNameMapper": {
       "^(\\.{1,2}/.*)\\.js$": "$1"
     }
@@ -49,6 +58,9 @@
   "devDependencies": {
     "@types/jest": "^28.1.8",
     "@types/node": "^18.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "eslint": "^8.23.0",
     "rimraf": "^3.0.2",
     "ts-jest": "^28.0.8",
     "typescript": "^4.8.2"
