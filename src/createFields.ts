@@ -1,6 +1,7 @@
-import { type Token, isWhiteSpace } from './token.js'
+import { type Token } from './token.js'
 import { ParseError } from './ParseError.js'
 import { createTokenGroups, type TokenGroup } from './createTokenGroups.js'
+import { isWhiteSpace } from './whiteSpaceUtils.js'
 
 export type Field = TokenGroup
 

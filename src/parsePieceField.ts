@@ -1,5 +1,4 @@
-import { whitePiecePattern, blackPiecePattern } from './patterns.js'
-import { type Token, isDigit, isSlash, isAlpha } from './token.js'
+import { type Token, tokenIs } from './token.js'
 import { type Field } from './createFields.js'
 import { ParseError } from './ParseError.js'
 import { createTokenGroups, type TokenGroup } from './createTokenGroups.js'
@@ -25,6 +24,12 @@ type PieceTypes = {
 }
 
 type Rank = TokenGroup
+
+const isSlash = tokenIs(/\//)
+const isDigit = tokenIs(/[1-8]/)
+const isAlpha = tokenIs(/[pnbrkq]/i)
+const whitePiecePattern = /[PNBRKQ]/g
+
 
 const fieldName = 'Piece placement data'
 
@@ -71,29 +76,11 @@ const rankMustNotBeEmpty = (rank: Rank): void => {
 const validateTokens = (rank: Rank): void => {
   for (let i = 0; i < rank.tokens.length; i++) {
     const currentToken: Token = rank.tokens[i]
-
-    if (isDigit(currentToken)) {
-      const currentTokenValue = Number(currentToken.value)
-      if (currentTokenValue < 1 || currentTokenValue > 8) {
-        throw new ParseError(
-          `${fieldName}: Numbers must be between 1-8, instead found "${currentToken.value}" at ${currentToken.index}`,
-          currentToken.index
-        )
-      }
-    }
-    else if (!currentToken.value.match(whitePiecePattern) && !currentToken.value.match(blackPiecePattern)) {
+    if (!isAlpha(currentToken) && !isDigit(currentToken)) {
       throw new ParseError(
-        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", instead found "${currentToken.value}" at ${currentToken.index}`,
+        `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K" or "1-8", instead found "${currentToken.value}" at ${currentToken.index}`,
         currentToken.index
       )
-    }
-    else {
-      if (!isAlpha(currentToken) && !isDigit(currentToken)) {
-        throw new ParseError(
-          `${fieldName}: Expected "p|r|n|b|q|k|P|R|N|B|Q|K", "1-8", instead found "${currentToken.value}" at ${currentToken.index}`,
-          currentToken.index
-        )
-      }
     }
   }
 }

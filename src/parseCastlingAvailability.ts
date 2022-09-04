@@ -1,4 +1,3 @@
-import { isDash } from './token.js'
 import { ParseError } from './ParseError.js'
 import { type Field } from './createFields.js'
 
@@ -20,7 +19,7 @@ export const validateCastlingAvailability = (field: Field): Field => {
       )
     }
 
-    if (field.tokens.length === 1 && isDash(field.tokens[0])) {
+    if (field.tokens.length === 1 && field.value === '-') {
       return field
     }
 
@@ -81,7 +80,7 @@ export const validateCastlingAvailability = (field: Field): Field => {
 }
 
 export const parseCastlingAvailability = (field: Field): CastlingAvailability | undefined => {
-  if (isDash(field.tokens[0])) {
+  if (field.value === '-') {
     return undefined
   }
 

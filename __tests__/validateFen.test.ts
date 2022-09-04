@@ -14,19 +14,34 @@ describe ('Validate input', () => {
 })
 
 describe('Validate whitespace', () => {
+  it('should be valid', () => {
+    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
+    expect(result.valid).toEqual(true)
+  })
+  
   it('FEN must not start with an empty string', () => {
     const result = validateFen(' rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
     expect(result.valid).toEqual(false)
+    expect(result).toMatchSnapshot()
   })
 
   it('FEN must not end with an empty string', () => {
     const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2 ')
     expect(result.valid).toEqual(false)
+    expect(result).toMatchSnapshot()
   })
 
   it('FEN must not have repeated empty strings', () => {
-    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR  w KQkq c6 0 2 ')
+    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR  w KQkq c6 0 2')
     expect(result.valid).toEqual(false)
+    expect(result).toMatchSnapshot()
+  })
+
+  it('FEN must not use non ASCII white space', () => {
+    // The white space between piece placement data and Active color is a tab
+    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR	w KQkq c6 0 2')
+    expect(result.valid).toEqual(false)
+    expect(result).toMatchSnapshot()
   })
 })
 

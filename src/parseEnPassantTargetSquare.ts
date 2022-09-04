@@ -1,9 +1,12 @@
-import { rankPattern, enPassantFilePattern } from './patterns.js'
-import { isDash } from './token.js'
 import { ParseError } from './ParseError.js'
 import { type Field } from './createFields.js'
 
+const rankPattern = /[a-h]/gi
+const enPassantFilePattern = /3|6/g
+
+
 const fieldName = 'En passant target square'
+
 export const validateEnPassantTargetSquare = (field: Field ): Field => {
   try {
     if (!field.tokens.length) {
@@ -14,7 +17,7 @@ export const validateEnPassantTargetSquare = (field: Field ): Field => {
     }
 
     if (field.tokens.length === 1) {
-      if (isDash(field.tokens[0])) {
+      if (field.value === '-') {
         return field
       }
       else {
@@ -59,7 +62,7 @@ export const validateEnPassantTargetSquare = (field: Field ): Field => {
 }
 
 export const parseEnPassantTargetSquare = (field: Field): string | undefined => {
-  if (isDash(field.tokens[0])) {
+  if (field.value === '-') {
     return undefined
   }
   return field.value

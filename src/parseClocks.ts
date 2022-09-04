@@ -1,10 +1,13 @@
-import { type Token, isDigit} from './token.js'
+import { type Token, tokenIs } from './token.js'
 import { ParseError } from './ParseError.js'
 import { Field } from './createFields.js'
 
+const isPositive = tokenIs(/[1-9]/)
+const isNonNegative = tokenIs(/[\d]/)
+
 const validate = (tokens: Token[], fieldName: string): Token[] => {
   for (const token of tokens) {
-    if (!isDigit(token)) {
+    if (!isNonNegative(token)) {
       throw new ParseError(
         `${fieldName}: Expected "0-9", instead found "${token.value}" at ${token.index}`,
         token.index
@@ -59,13 +62,14 @@ export const validateFullMoveNumber = (field: Field): Field => {
       )
     }
 
-    if (field.tokens[0].value === '0') {
+    if (!isPositive(field.tokens[0])) {
       throw new ParseError(
-        `${fullMoveName}: Expected "1-9", instead found "0" at ${field.tokens[0].index}`,
+        `${fullMoveName}: Expected "1-9", instead found "${field.tokens[0].value}" at ${field.tokens[0].index}`,
         field.tokens[0].index
       )
     }
-    validate(field.tokens, fullMoveName)
+
+    validate(field.tokens.slice(1), fullMoveName)
   }
   catch (e) {
     if (e instanceof ParseError) {

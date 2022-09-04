@@ -1,4 +1,4 @@
-import { createTokens } from './createTokens.js'
+import { createTokens } from './token.js'
 import { createFields, type Field } from './createFields.js'
 import { parsePieceField, validatePieceField, type Piece } from './parsePieceField.js'
 import { parseActiveColor, validateActiveColor } from './parseActiveColor.js'

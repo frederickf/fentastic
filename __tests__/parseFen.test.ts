@@ -26,7 +26,8 @@ describe('Parsing a invalid FEN', () => {
 
 describe('Options tests', () => {
   it('should accept the correctWhiteSpace option', () => {
-    const fen = '   rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR   w KQkq c3 0 1  '
+    // The white space between piece placement data and Active color is a tab
+    const fen = '   rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR	w   KQkq c3 0 1  '
     const result = parseFen(fen, {correctWhiteSpace: true})
     expect(result).toHaveProperty('fen', fen)
     expect(result).toHaveProperty('valid', true)

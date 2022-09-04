@@ -109,7 +109,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 58,
-      "message": "Fullmove number: Expected \\"0-9\\", instead found \\"p\\" at 58",
+      "message": "Fullmove number: Expected \\"1-9\\", instead found \\"p\\" at 58",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c3 1 p",
@@ -148,7 +148,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 18,
-      "message": "Piece placement data: Numbers must be between 1-8, instead found \\"0\\" at 18",
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"0\\" at 18",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/0/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -161,7 +161,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 18,
-      "message": "Piece placement data: Numbers must be between 1-8, instead found \\"9\\" at 18",
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"9\\" at 18",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/9/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -174,7 +174,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 0,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\", instead found \\"w\\" at 0",
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"w\\" at 0",
     },
   ],
   "fen": "wnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -239,7 +239,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 0,
-      "message": "Invalid character \\";\\" at position 0",
+      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\";\\" at 0",
     },
   ],
   "fen": ";nbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -295,6 +295,58 @@ Object {
     },
   ],
   "fen": "pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate whitespace FEN must not end with an empty string 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 61,
+      "message": "Expected \\"1-9\\", instead found \\" \\" at 61",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2 ",
+  "valid": false,
+}
+`;
+
+exports[`Validate whitespace FEN must not have repeated empty strings 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 48,
+      "message": "Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K|w|-|/\\" or \\"0-9\\", instead found \\" \\", at 48",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR  w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate whitespace FEN must not start with an empty string 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 0,
+      "message": "Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\" \\" at 0",
+    },
+  ],
+  "fen": " rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate whitespace FEN must not use non ASCII white space 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 47,
+      "message": "Expected ASCII space, instead found non ASCII space 	, at 47",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR	w KQkq c6 0 2",
   "valid": false,
 }
 `;
