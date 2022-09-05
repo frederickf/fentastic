@@ -5,7 +5,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 48,
-      "message": "Active color: Expected \\"w|b\\" character, instead found \\"wb\\" at 48",
+      "message": "Active color: Unexpected value, found \\"2\\", expected field length to be \\"1\\", at index 48",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR wb KQkq c6 0 2",
@@ -18,7 +18,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 48,
-      "message": "Active color: Expected \\"w|b\\", instead found \\"p\\" at 48",
+      "message": "Active color: Unexpected value, found \\"p\\", expected one of \\"w|b\\", at index 48",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR p KQkq c6 0 2",
@@ -31,7 +31,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 53,
-      "message": "Castling availability: Expected \\"q\\", instead found \\"p\\" at 53",
+      "message": "Castling availability: Unexpected value, found \\"p\\", expected one of \\"q\\", at index 53",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkp c6 0 2",
@@ -44,7 +44,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 51,
-      "message": "Castling availability: Expected \\"k|q\\", instead found \\"K\\" at 51",
+      "message": "Castling availability: Unexpected value, found \\"K\\", expected one of \\"k|q\\", at index 51",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w QKkq c6 0 2",
@@ -57,7 +57,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 54,
-      "message": "En passant target square: Expected \\"3|6\\", instead found \\"2\\" at 54",
+      "message": "En passant target square: Unexpected value, found \\"2\\", expected one of \\"3|6\\", at index 54",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c2 0 2",
@@ -70,7 +70,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 53,
-      "message": "En passant target square: Expected \\"-\\", instead found \\"c\\" at 53",
+      "message": "En passant target square: Unexpected value, found \\"1\\", expected field length to be \\"2\\", at index 53",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c 0 2",
@@ -83,7 +83,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 53,
-      "message": "En passant target square: Expected 2 characters, instead found 4, at 53",
+      "message": "En passant target square: Unexpected value, found \\"4\\", expected field length to be \\"2\\", at index 53",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c3c3 0 2",
@@ -96,7 +96,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 58,
-      "message": "Fullmove number: Expected \\"1-9\\", instead found \\"0\\" at 58",
+      "message": "Fullmove number: Unexpected value, found \\"0\\", expected one of \\"1-9\\", at index 58",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c3 1 0",
@@ -109,7 +109,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 58,
-      "message": "Fullmove number: Expected \\"1-9\\", instead found \\"p\\" at 58",
+      "message": "Fullmove number: Unexpected value, found \\"p\\", expected one of \\"1-9\\", at index 58",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c3 1 p",
@@ -122,7 +122,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 55,
-      "message": "Halfmove clock: Expected \\"0-9\\", instead found \\"p\\" at 55",
+      "message": "Halfmove clock: Unexpected value, found \\"p\\", expected one of \\"0-9\\", at index 55",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq - p 2",
@@ -135,7 +135,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 55,
-      "message": "Halfmove clock: Field can't exceed \\"100\\". Instead found \\"101\\" at 55",
+      "message": "Halfmove clock: Unexpected value, found \\"101\\", expected field to not exceed \\"100\\", at index 55",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq - 101 2",
@@ -148,7 +148,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 18,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"0\\" at 18",
+      "message": "Piece placement data: Unexpected value, found \\"0\\", expected one of \\"p|r|n|b|q|k|P|R|N|B|Q|K|1-8\\", at index 18",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/0/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -161,7 +161,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 18,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"9\\" at 18",
+      "message": "Piece placement data: Unexpected value, found \\"9\\", expected one of \\"p|r|n|b|q|k|P|R|N|B|Q|K|1-8\\", at index 18",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/9/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -174,7 +174,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 0,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"w\\" at 0",
+      "message": "Piece placement data: Unexpected value, found \\"w\\", expected one of \\"p|r|n|b|q|k|P|R|N|B|Q|K|1-8\\", at index 0",
     },
   ],
   "fen": "wnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -187,7 +187,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 47,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"/\\" at 47",
+      "message": "Piece placement data: Unexpected value, found \\"/\\", at index 47",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR/ w KQkq c6 0 2",
@@ -199,8 +199,8 @@ exports[`Validate Piece placement data: must not have empty rank 1`] = `
 Object {
   "errors": Array [
     ParseError {
-      "index": 8,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"\\" at 8",
+      "index": 9,
+      "message": "Piece placement data: Unexpected value, found \\"/\\", expected one of \\"p|r|n|b|q|k|P|R|N|B|Q|K|1-8\\", at index 9",
     },
   ],
   "fen": "rnbqkbnr//8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -213,7 +213,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 47,
-      "message": "Piece placement data: Expected rank count of \\"8\\", instead found \\"9\\" at 47.",
+      "message": "Piece placement data: Unexpected value, found \\"9\\", expected rank count to be \\"8\\", at index 47",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR/RNBQKBNR w KQkq c6 0 2",
@@ -226,7 +226,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 0,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\"/\\" at 0",
+      "message": "Piece placement data: Unexpected value, found \\"/\\", expected one of \\"p|r|n|b|q|k|P|R|N|B|Q|K|1-8\\", at index 0",
     },
   ],
   "fen": "/rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -239,7 +239,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 0,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\";\\" at 0",
+      "message": "Piece placement data: Unexpected value, found \\";\\", expected one of \\"p|r|n|b|q|k|P|R|N|B|Q|K|1-8\\", at index 0",
     },
   ],
   "fen": ";nbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -252,7 +252,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 12,
-      "message": "Piece placement data: Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\", instead found \\"1\\" at 12.",
+      "message": "Piece placement data: Unexpected value, found \\"1\\", expected one of \\"p|r|n|b|q|k|P|R|N|B|Q|K\\", at index 12",
     },
   ],
   "fen": "rnbqkbnr/pp11pppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -265,7 +265,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 8,
-      "message": "Piece placement data: File count must not exceed \\"8\\", instead found \\"9\\" at 8",
+      "message": "Piece placement data: Unexpected value, found \\"9\\", expected file count to not exceed \\"8\\", at index 8",
     },
   ],
   "fen": "rnbqkbnrQ/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -278,7 +278,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 6,
-      "message": "Piece placement data: Expected file count of \\"8\\", instead found \\"7\\" at 6",
+      "message": "Piece placement data: Unexpected value, found \\"7\\", expected file count to be \\"8\\", at index 6",
     },
   ],
   "fen": "rnbqkbn/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -291,7 +291,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 29,
-      "message": "Piece placement data: Expected rank count of \\"8\\", instead found \\"7\\" at 29.",
+      "message": "Piece placement data: Unexpected value, found \\"7\\", expected rank count to be \\"8\\", at index 29",
     },
   ],
   "fen": "pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -304,7 +304,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 61,
-      "message": "Expected \\"1-9\\", instead found \\" \\" at 61",
+      "message": "Whitespace: Unexpected value, found \\" \\", at index 61",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2 ",
@@ -317,7 +317,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 48,
-      "message": "Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K|w|-|/\\" or \\"0-9\\", instead found \\" \\", at 48",
+      "message": "Whitespace: Unexpected value, found \\" \\", at index 48",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR  w KQkq c6 0 2",
@@ -330,7 +330,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 0,
-      "message": "Expected \\"p|r|n|b|q|k|P|R|N|B|Q|K\\" or \\"1-8\\", instead found \\" \\" at 0",
+      "message": "Whitespace: Unexpected value, found \\" \\", at index 0",
     },
   ],
   "fen": " rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -343,7 +343,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 47,
-      "message": "Expected ASCII space, instead found non ASCII space 	, at 47",
+      "message": "Whitespace: Unexpected value, found \\"	\\", expected ASCII space \\" \\", at index 47",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR	w KQkq c6 0 2",

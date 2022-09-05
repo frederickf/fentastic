@@ -10,43 +10,23 @@ const fieldName = 'En passant target square'
 export const validateEnPassantTargetSquare = (field: Field ): Field => {
   try {
     if (!field.tokens.length) {
-      throw new ParseError(
-        `${fieldName}: Expected "a-h", instead found "" at ${field.delimiter.index}`,
-        field.delimiter.index
-      )
+      throw new ParseError(fieldName, '', field.delimiter.index, '-|a-h')
     }
 
-    if (field.tokens.length === 1) {
-      if (field.value === '-') {
-        return field
-      }
-      else {
-        throw new ParseError(
-          `${fieldName}: Expected "-", instead found "${field.value}" at ${field.tokens[0].index}`,
-          field.tokens[0].index
-        )
-      }
+    if (field.value === '-') {
+      return field
     }
   
     if (field.tokens.length !== 2) {
-      throw new ParseError(
-        `${fieldName}: Expected 2 characters, instead found ${field.tokens.length}, at ${field.tokens[0].index}`,
-        field.tokens[0].index
-      )
+      throw new ParseError(fieldName, field.tokens.length, field.tokens[0].index, '2', 'field length to be')
     }
     
     if (!field.tokens[0].value.match(rankPattern)) {
-      throw new ParseError(
-        `${fieldName}: Expected "a-h", instead found "${field.tokens[0].value}" at ${field.tokens[0].index}`,
-        field.tokens[0].index
-      )
+      throw new ParseError(fieldName, field.tokens[0].value, field.tokens[0].index, 'a-h')
     }
   
     if (!field.tokens[1].value.match(enPassantFilePattern)) {
-      throw new ParseError(
-        `${fieldName}: Expected "3|6", instead found "${field.tokens[1].value}" at ${field.tokens[1].index}`,
-        field.tokens[1].index
-      )
+      throw new ParseError(fieldName, field.tokens[1].value, field.tokens[1].index, '3|6')
     }
   }
   catch (e) {

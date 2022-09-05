@@ -1,7 +1,7 @@
 export class InputError {
   constructor(
     public message: string,
-    public position: number
+    public argument: number
   ) {}
 }
 

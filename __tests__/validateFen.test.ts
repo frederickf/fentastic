@@ -88,7 +88,7 @@ describe('Validate Piece placement data:', () => {
   })
 
   // w is an example of character that is valid elsewhere in the fen string so it is allowed
-  // to reach Piece placement data. I obvsiously can't test every invalid character. this test
+  // to reach Piece placement data. I can't test every invalid character. this test
   // will be delete when I create a better test for only the valid characters
   test('The character "w" is not valid', () => {
     const result = validateFen('wnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
@@ -96,7 +96,7 @@ describe('Validate Piece placement data:', () => {
     expect(result).toMatchSnapshot()
   })
 
-  // These characters can be in the En pasant target squere (b too, but that is valid here)
+  // These characters can be in the En passant target square (b too, but that is valid here)
   test.todo('Tests to validate the other invalid characters "a|c|d|e|f|g|h"')
 
   test.todo('Tests to validate the actual valid characters "p|r|n|b|q|k|P|R|N|B|Q|K"')

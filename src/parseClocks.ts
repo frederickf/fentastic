@@ -8,10 +8,7 @@ const isNonNegative = tokenIs(/[\d]/)
 const validate = (tokens: Token[], fieldName: string): Token[] => {
   for (const token of tokens) {
     if (!isNonNegative(token)) {
-      throw new ParseError(
-        `${fieldName}: Expected "0-9", instead found "${token.value}" at ${token.index}`,
-        token.index
-      )
+      throw new ParseError(fieldName, token.value, token.index, '0-9')
     }
   }
   return tokens
@@ -22,18 +19,12 @@ const halfMoveName = 'Halfmove clock'
 export const validateHalfMoveClock = (field: Field): Field => {
   try {
     if (!field.tokens.length) {
-      throw new ParseError(
-        `${fullMoveName}: Expected "0-9", instead found "" at ${field.delimiter.index}`,
-        field.delimiter.index
-      )
+      throw new ParseError(halfMoveName, '', field.delimiter.index, '0-9')
     }
     const tokens: Token[] = validate(field.tokens, halfMoveName)
     const fieldValue = Number(field.value)
     if (fieldValue > 100) {
-      throw new ParseError(
-        `${halfMoveName}: Field can't exceed "100". Instead found "${field.value}" at ${tokens[0].index}`,
-        tokens[0].index
-      )
+      throw new ParseError(halfMoveName, field.value, tokens[0].index, '100', 'field to not exceed')
     }
   }
   catch (e) {
@@ -56,17 +47,11 @@ const fullMoveName = 'Fullmove number'
 export const validateFullMoveNumber = (field: Field): Field => {
   try {
     if (!field.tokens.length) {
-      throw new ParseError(
-        `${fullMoveName}: Expected "1-9", instead found "" at ${field.delimiter.index}`,
-        field.delimiter.index
-      )
+      throw new ParseError(fullMoveName, '', field.delimiter.index, '1-9')
     }
 
     if (!isPositive(field.tokens[0])) {
-      throw new ParseError(
-        `${fullMoveName}: Expected "1-9", instead found "${field.tokens[0].value}" at ${field.tokens[0].index}`,
-        field.tokens[0].index
-      )
+      throw new ParseError(fullMoveName, field.tokens[0].value, field.tokens[0].index, '1-9')
     }
 
     validate(field.tokens.slice(1), fullMoveName)

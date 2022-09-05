@@ -4,24 +4,12 @@ import { type Field } from './createFields.js'
 const fieldName = 'Active color'
 export const validateActiveColor = (field: Field): Field => {
   try {
-    if (!field.tokens.length) {
-      throw new ParseError(
-        `${fieldName}: Expected "w|b", instead found "" at ${field.delimiter.index}`,
-        field.delimiter.index
-      )
-    }
     if (field.tokens.length !== 1) {
-      throw new ParseError(
-        `${fieldName}: Expected "w|b" character, instead found "${field.value}" at ${field.tokens[0].index}`,
-        field.tokens[0].index
-      )
+      throw new ParseError(fieldName, field.tokens.length, field.tokens[0].index, '1', 'field length to be')
     }
   
     if (field.value !== 'w' && field.value !== 'b') {
-      throw new ParseError(
-        `${fieldName}: Expected "w|b", instead found "${field.value}" at ${field.tokens[0].index}`,
-        field.tokens[0].index
-      )
+      throw new ParseError(fieldName, field.value, field.tokens[0].index, 'w|b')
     }
   }
   catch (e) {
