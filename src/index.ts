@@ -1,10 +1,10 @@
 import { createTokens } from './token.js'
-import { createFields, type Field } from './createFields.js'
-import { parsePieceField, validatePieceField, type Piece } from './parsePieceField.js'
-import { parseActiveColor, validateActiveColor } from './parseActiveColor.js'
-import { parseCastlingAvailability, validateCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
-import { parseEnPassantTargetSquare, validateEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
-import { parseHalfMoveClock, validateHalfMoveClock, parseFullMoveNumber, validateFullMoveNumber } from './parseClocks.js'
+import { createFields, validateFields, type Field } from './createFields.js'
+import { parsePieceField, type Piece } from './parsePieceField.js'
+import { parseActiveColor } from './parseActiveColor.js'
+import { parseCastlingAvailability, type CastlingAvailability } from './parseCastlingAvailability.js'
+import { parseEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
+import { parseHalfMoveClock, parseFullMoveNumber } from './parseClocks.js'
 import { ParseError, ParseErrors } from './ParseError.js'
 import { validateInputFen, InputError } from './validateInputFen.js'
 import { correctWhiteSpace, validateWhiteSpace } from './whiteSpaceUtils.js'
@@ -38,25 +38,6 @@ export type Options = {
   correctWhiteSpace: boolean
 }
 
-const validateFields = (fields: Field[]): Field[] => {
-  validatePieceField(fields[0])
-  validateActiveColor(fields[1])
-  validateCastlingAvailability(fields[2])
-  validateEnPassantTargetSquare(fields[3])
-  validateHalfMoveClock(fields[4])
-  validateFullMoveNumber(fields[5])
-
-  const errors = fields
-    .filter((f): f is Required<Field> => f.error instanceof ParseError)
-    .map((f) => f.error)
-  
-  if (errors.length) {
-    throw new ParseErrors(errors)
-  }
-
-  return fields
-}
-
 const handleErrors = (e: unknown, inputFen: unknown): InvalidFen => {
   if (e instanceof ParseError || e instanceof InputError) {
     return { fen: inputFen, valid: false, errors: [e] }
@@ -74,7 +55,6 @@ export const validateFen = (inputFen: string): ValidFen | InvalidFen => {
     const tokens = createTokens(fen)
     validateWhiteSpace(tokens)
     const fields = createFields(tokens)
-
     validateFields(fields)
 
     return { fen, valid: true }

@@ -39,7 +39,7 @@ else {
 Prior to validation and parsing, white space will be trimmed from the FEN string, and whitespace separating fields will be collapsed to a single space.
 ```
 parseFen('  rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w   KQkq - 0 1 ', {
-  parseWhiteSpace: true
+  correctWhiteSpace: true
 })
 ```
 In the example above, the FEN string would be considered valid and correctly parsed. Note that the input string will be returned unchanged. You will need to rely on the parsed results. 
