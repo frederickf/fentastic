@@ -5,7 +5,7 @@ const fieldName = 'Active color'
 export const validateActiveColor = (field: Field): Field => {
   try {
     if (field.tokens.length !== 1) {
-      throw new ParseError(fieldName, field.tokens.length, field.tokens[0].index, '1', 'field length to be')
+      throw new ParseError(fieldName, field.tokens.length, field.tokens[0].index, '1', 'field length to be', 'count')
     }
   
     if (field.value !== 'w' && field.value !== 'b') {

@@ -23,7 +23,7 @@ export const validateCastlingAvailability = (field: Field): Field => {
   
     if (field.tokens.length > 4) {
       const lastToken = field.tokens[field.tokens.length - 1]
-      throw new ParseError(fieldName, field.tokens.length, lastToken.index, '1-4', 'field length to be')
+      throw new ParseError(fieldName, field.tokens.length, lastToken.index, '1-4', 'field length to be', 'count')
     }
   
     for (let i = 0; i < field.tokens.length; i++) {

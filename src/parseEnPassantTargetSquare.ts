@@ -18,7 +18,7 @@ export const validateEnPassantTargetSquare = (field: Field ): Field => {
     }
   
     if (field.tokens.length !== 2) {
-      throw new ParseError(fieldName, field.tokens.length, field.tokens[0].index, '2', 'field length to be')
+      throw new ParseError(fieldName, field.tokens.length, field.tokens[0].index, '2', 'field length to be', 'count')
     }
     
     if (!field.tokens[0].value.match(rankPattern)) {
