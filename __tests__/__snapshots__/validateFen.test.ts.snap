@@ -5,7 +5,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 48,
-      "message": "Active color: Unexpected value, found \\"2\\", expected field length to be \\"1\\", at index 48",
+      "message": "Active color: Unexpected count, found \\"2\\", expected field length to be \\"1\\", at index 48",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR wb KQkq c6 0 2",
@@ -70,7 +70,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 53,
-      "message": "En passant target square: Unexpected value, found \\"1\\", expected field length to be \\"2\\", at index 53",
+      "message": "En passant target square: Unexpected count, found \\"1\\", expected field length to be \\"2\\", at index 53",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c 0 2",
@@ -83,7 +83,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 53,
-      "message": "En passant target square: Unexpected value, found \\"4\\", expected field length to be \\"2\\", at index 53",
+      "message": "En passant target square: Unexpected count, found \\"4\\", expected field length to be \\"2\\", at index 53",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w kq c3c3 0 2",
