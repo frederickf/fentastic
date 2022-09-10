@@ -16,7 +16,7 @@ const split = (isDelimiter: isOfType, tokens: Token[]): Token[][]=> {
   return result
 }
 
-export const createTokenGroups = (isDelimiter: isOfType, tokens: Token[]): TokenGroup[]=> (
+export const createTokenGroups = (isDelimiter: isOfType, tokens: Token[]): TokenGroup[] => (
   split(isDelimiter, tokens).map((group: Token[]): TokenGroup => ({
     value: group.filter(token => !isDelimiter(token)).map(token => token.value).join(''),
     delimiter: group.find(isDelimiter) || { value: '', index: 0 },

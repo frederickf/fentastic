@@ -9,8 +9,9 @@ import { validateEnPassantTargetSquare } from './parseEnPassantTargetSquare.js'
 import { validateHalfMoveClock, validateFullMoveNumber } from './parseClocks.js'
 
 export type Field = TokenGroup
+export type Fields = [TokenGroup, TokenGroup, TokenGroup, TokenGroup, TokenGroup, TokenGroup]
 
-export const validateFields = (fields: Field[]): Field[] => {
+export const validateFields = (fields: Fields): Fields => {
   validatePieceField(fields[0])
   validateActiveColor(fields[1])
   validateCastlingAvailability(fields[2])
@@ -29,13 +30,13 @@ export const validateFields = (fields: Field[]): Field[] => {
   return fields
 }
 
-export const createFields = (tokens: Token[]): Field[] => {
-  const fields: Field[] = createTokenGroups(isWhiteSpace, tokens)
+export const createFields = (tokens: Token[]): Fields => {
+  const tokenGroups: TokenGroup[] = createTokenGroups(isWhiteSpace, tokens)
 
-  if (fields.length !== 6) {
+  if (tokenGroups.length !== 6) {
     const last: Token = tokens[tokens.length - 1]
-    throw new ParseError('Fields', fields.length, last.index, '6', 'field count to be')
+    throw new ParseError('Fields', tokenGroups.length, last.index, '6', 'field count to be', 'count')
   }
-
-  return fields
+  
+  return tokenGroups as Fields
 }

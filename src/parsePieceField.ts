@@ -24,6 +24,7 @@ type PieceTypes = {
 }
 
 type Rank = TokenGroup
+type Ranks = [TokenGroup, TokenGroup, TokenGroup, TokenGroup, TokenGroup, TokenGroup, TokenGroup, TokenGroup]
 
 const isSlash = tokenIs(/\//)
 const isDigit = tokenIs(/[1-8]/)
@@ -53,6 +54,16 @@ const mustNotEndWithSlash = (field: Field): void => {
   if (isSlash(tokens[lastIndex])) {
     throw new ParseError(fieldName, '/', tokens[lastIndex].index) 
   }
+}
+
+const createRanks = (tokens: Token[]): Ranks => {
+  const tokenGroups: TokenGroup[] = createTokenGroups(isSlash, tokens)
+  if (tokenGroups.length !== 8) {
+    throw new ParseError(
+      fieldName, tokenGroups.length, tokenGroups[tokenGroups.length -1].delimiter.index, '8', 'rank count to be', 'count'
+    )
+  }
+  return tokenGroups as Ranks
 }
 
 const rankMustNotBeEmpty = (rank: Rank): void => {
@@ -91,17 +102,11 @@ const validateFileCount = (rank: Rank): void => {
       fileCount = fileCount + 1
     }
     if (fileCount > 8) {
-      throw new ParseError(fieldName, fileCount, token.index, '8', 'file count to not exceed')
+      throw new ParseError(fieldName, fileCount, token.index, '8', 'file count to not exceed', 'count')
     }
     if (i === rank.tokens.length - 1 && fileCount !== 8 ) {
-      throw new ParseError(fieldName, fileCount, token.index, '8', 'file count to be')
+      throw new ParseError(fieldName, fileCount, token.index, '8', 'file count to be', 'count')
     }
-  }
-}
-
-const validateRankCount = (ranks: Rank[]): void => {
-  if (ranks.length !== 8) {
-    throw new ParseError(fieldName, ranks.length, ranks[ranks.length -1].delimiter.index, '8', 'rank count to be')
   }
 }
 
@@ -112,14 +117,13 @@ export const validatePieceField = (field: Field): Field => {
     tokensMustExist(field)
     mustNotStartWithSlash(field)
     mustNotEndWithSlash(field)
-    const ranks: Rank[] = createTokenGroups(isSlash, field.tokens)
+    const ranks: Ranks = createRanks(field.tokens)
     for (const rank of ranks) {
       rankMustNotBeEmpty(rank)
       validateTokens(rank)
       validateNextDigit(rank)
       validateFileCount(rank)
     }
-    validateRankCount(ranks)
   }
   catch(e) {
     if (e instanceof ParseError) {

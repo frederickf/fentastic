@@ -1,10 +1,12 @@
+type subject = 'value' | 'count'
+
 export class ParseError {
   public message: string
   public index: number
 
-  constructor(prefix: string, found: string | number, index: number, pattern?: string, description = 'one of') {
+  constructor(prefix: string, found: string | number, index: number, pattern?: string, description = 'one of', subject: subject = 'value') {
     const expected = typeof pattern === 'string' ? `, expected ${description} "${pattern}"` : ''
-    this.message = `${prefix}: Unexpected value, found "${found}"${expected}, at index ${index}`
+    this.message = `${prefix}: Unexpected ${subject}, found "${found}"${expected}, at index ${index}`
     this.index = index
   }
 }

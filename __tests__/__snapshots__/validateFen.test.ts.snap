@@ -213,7 +213,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 47,
-      "message": "Piece placement data: Unexpected value, found \\"9\\", expected rank count to be \\"8\\", at index 47",
+      "message": "Piece placement data: Unexpected count, found \\"9\\", expected rank count to be \\"8\\", at index 47",
     },
   ],
   "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR/RNBQKBNR w KQkq c6 0 2",
@@ -265,7 +265,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 8,
-      "message": "Piece placement data: Unexpected value, found \\"9\\", expected file count to not exceed \\"8\\", at index 8",
+      "message": "Piece placement data: Unexpected count, found \\"9\\", expected file count to not exceed \\"8\\", at index 8",
     },
   ],
   "fen": "rnbqkbnrQ/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -278,7 +278,7 @@ Object {
   "errors": Array [
     ParseError {
       "index": 6,
-      "message": "Piece placement data: Unexpected value, found \\"7\\", expected file count to be \\"8\\", at index 6",
+      "message": "Piece placement data: Unexpected count, found \\"7\\", expected file count to be \\"8\\", at index 6",
     },
   ],
   "fen": "rnbqkbn/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
@@ -291,10 +291,36 @@ Object {
   "errors": Array [
     ParseError {
       "index": 29,
-      "message": "Piece placement data: Unexpected value, found \\"7\\", expected rank count to be \\"8\\", at index 29",
+      "message": "Piece placement data: Unexpected count, found \\"7\\", expected rank count to be \\"8\\", at index 29",
     },
   ],
   "fen": "pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+  "valid": false,
+}
+`;
+
+exports[`Validate field count should be invalid because of too few fields 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 58,
+      "message": "Fields: Unexpected count, found \\"5\\", expected field count to be \\"6\\", at index 58",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0",
+  "valid": false,
+}
+`;
+
+exports[`Validate field count should be invalid because of too many fields 1`] = `
+Object {
+  "errors": Array [
+    ParseError {
+      "index": 62,
+      "message": "Fields: Unexpected count, found \\"7\\", expected field count to be \\"6\\", at index 62",
+    },
+  ],
+  "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2 2",
   "valid": false,
 }
 `;

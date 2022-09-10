@@ -45,6 +45,26 @@ describe('Validate whitespace', () => {
   })
 })
 
+describe('Validate field count', () => {
+  it('should be valid', () => {
+    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
+    expect(result.valid).toEqual(true)
+  })
+
+  it('should be invalid because of too few fields', () => {
+    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0')
+    expect(result.valid).toEqual(false)
+    expect(result).toMatchSnapshot()
+  })
+
+  it('should be invalid because of too many fields', () => {
+    const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2 2')
+    expect(result.valid).toEqual(false)
+    expect(result).toMatchSnapshot()
+  })
+
+})
+
 describe('Validate Piece placement data:', () => {
   it('should be valid', () => {
     const result = validateFen('rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2')
