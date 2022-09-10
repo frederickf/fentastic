@@ -1,6 +1,6 @@
 {
   "name": "fentastic",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Validate and parse Forsyth-Edwards Notation (FEN) used to describe a chess game board position.",
   "author": "frederickf <ffeibel@gmailc.com>",
   "license": "MIT",
